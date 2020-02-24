@@ -8,8 +8,8 @@ namespace BattleShips.Model
 {
     public class UserGame
     {
-        public int UserId { get; set; }
-        public int GameId { get; set; }
+        public string UserId { get; set; }
+        public Guid GameId { get; set; }
         [ForeignKey("GameId")]
         public Game Game { get; set; }
         [ForeignKey("UserId")]

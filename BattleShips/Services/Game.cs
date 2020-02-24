@@ -7,6 +7,6 @@ namespace BattleShips.Services
 {
     public class Game
     {
-
+        //Herní Logika Čeleda
     }
 }

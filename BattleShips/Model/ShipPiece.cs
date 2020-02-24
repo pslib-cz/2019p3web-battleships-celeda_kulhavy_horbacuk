@@ -15,5 +15,7 @@ namespace BattleShips.Model
         public int PosX { get; set; }
         public int PosY { get; set; }
         public bool IsMargin { get; set; }
+        [ForeignKey("ShipId")]
+        public Ship Ship { get; set; }
     }
 }
