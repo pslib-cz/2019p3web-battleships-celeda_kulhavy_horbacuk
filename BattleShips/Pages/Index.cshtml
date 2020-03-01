@@ -1,10 +1,24 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Login page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page - BattleShips</title>
+    <link href="~/css/index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="text-center jumbotron">
+        <h1 class="display-4">Battle ships</h1>
+        <div class="m-4 container">
+            <p>
+                Zde můžete
+                <a class="btn btn-primary" href="/Game/CreateGame">Vytvořit novou hru</a>
+                nebo
+                <a class="btn btn-primary" href="/Game/GameList">připojit se ke hře.</a>
+            </p>
+        </div>
+    </div>
+</body>
