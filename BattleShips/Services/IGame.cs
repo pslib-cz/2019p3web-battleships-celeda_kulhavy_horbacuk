@@ -8,10 +8,10 @@ namespace BattleShips.Services
 {
     public interface IGame
     {
-        int Size { get; set; }
-        int Players { get; set; }
-        
-        //AddUser
-        //ShipPlacement       
+        IList<ShipPiece> Ships(); //List lodí
+        public void Shooting(/*pozice, kdo*/);
+        public void EndCheck();//kontrola stavu hry
+        public void BoxCheck();//kontrola herních políček
+
     }
 }

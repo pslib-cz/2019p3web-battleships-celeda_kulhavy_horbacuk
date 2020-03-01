@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace BattleShips.Services
 {
-    public class Game
+    public interface IEnd
     {
-        //Herní Logika Čeleda
     }
 }
