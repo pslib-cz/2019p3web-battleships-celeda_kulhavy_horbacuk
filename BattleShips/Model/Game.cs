@@ -16,8 +16,14 @@ namespace BattleShips.Model
         public string CurrentPlayerId { get; set; }
         public int GameSize { get; set; }
         [ForeignKey("CurrentPlayerId")]
+        public User CurrentUser { get; set; }
+        [ForeignKey("OwnerId")]
         public User User { get; set; }
-        //[ForeignKey("OwnerId")]
-        //public User User { get; set; }
+        public enum GameState
+        { 
+            Setup = 0,
+            Battle = 1,
+            End = 2
+        }
     }
 }

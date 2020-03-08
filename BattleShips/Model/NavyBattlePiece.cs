@@ -11,10 +11,21 @@ namespace BattleShips.Model
     {
         [Key]
         public int TypeId { get; set; }
-        public string UserId { get; set; }
+        public string UserGameId { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public UserGame UserGame { get; set; }
+        [ForeignKey("TypeId")]
+        public Ship Ship { get; set; }
+        public bool Hidden { get; set; }
+        public enum PieceState
+        { 
+            Water = 0,
+            Ship = 1,
+            DeadWater = 2,
+            DeadShip = 3,
+            Margin = 4
+        }
     }
 }
