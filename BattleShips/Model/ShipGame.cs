@@ -13,10 +13,15 @@ namespace BattleShips.Model
         public int Id { get; set; }
 
         public int ShipId { get; set; }
-        public Guid GameId { get; set; }
         [ForeignKey("ShipId")]
         public Ship Ship { get; set; }
+
+        public Guid GameId { get; set; }
         [ForeignKey("GameId")]
         public Game Game { get; set; }
+
+        public ICollection<User> Users { get; set; }
+        public ICollection<Game> Games { get; set; }
+        public ICollection<UserGame> UserGames { get; set; }
     }
 }

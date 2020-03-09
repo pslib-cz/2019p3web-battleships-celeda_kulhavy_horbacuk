@@ -21,6 +21,7 @@ namespace BattleShips.Model
         {
 
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,7 +36,7 @@ namespace BattleShips.Model
 
             modelBuilder.Entity<UserGame>()
                 .HasOne(ug => ug.Game)
-                .WithMany(g => g.Users)
+                .WithMany(g => g.UserGames)
                 .HasForeignKey(ug => ug.GameId);
         }
     }

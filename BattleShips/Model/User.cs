@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace BattleShips.Model
 {
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
+        [Key]
+        public IdentityUser IdentityUser { get; set; }
+
+        public ICollection<Game> Game { get; set; }
         public ICollection<UserGame> Games { get; set; }
+        public ICollection<ShipUser> ShipUsers { get; set; }
     }
 }

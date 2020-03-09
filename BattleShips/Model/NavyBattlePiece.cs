@@ -10,14 +10,19 @@ namespace BattleShips.Model
     public class NavyBattlePiece
     {
         [Key]
-        public int TypeId { get; set; }
-        public string UserGameId { get; set; }
+        public int Id { get; set; }
+
         public int PosX { get; set; }
         public int PosY { get; set; }
-        [ForeignKey("UserId")]
+
+        public string UserGameId { get; set; }
+        [ForeignKey("UserGameId")]
         public UserGame UserGame { get; set; }
-        [ForeignKey("TypeId")]
+
+        public int ShipId { get; set; } //Type
+        [ForeignKey("ShipId")]
         public Ship Ship { get; set; }
+
         public bool Hidden { get; set; }
         public enum PieceState
         { 

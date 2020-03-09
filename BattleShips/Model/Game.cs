@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,15 +12,19 @@ namespace BattleShips.Model
     {
         [Key]
         public Guid GameId { get; set; }
+
         public int MaxPlayers { get; set; }
-        public string OwnerId { get; set; }
-        public string CurrentPlayerId { get; set; }
         public int GameSize { get; set; }
+
+        public string CurrentPlayerId { get; set; }
         [ForeignKey("CurrentPlayerId")]
-        public User CurrentUser { get; set; }
+        public IdentityUser CurrentUser { get; set; }
+
+        public string OwnerId { get; set; }
         [ForeignKey("OwnerId")]
-        public User User { get; set; }
-        public ICollection<UserGame> Users { get; set; }
+        public IdentityUser User { get; set; }
+
+        public ICollection<UserGame> UserGames { get; set; }
         public GameState GameState { get; set; }
     }
 }

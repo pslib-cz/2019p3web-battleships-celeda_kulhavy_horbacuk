@@ -11,10 +11,11 @@ namespace BattleShips.Model
     {
         [Key]
         public int Id { get; set; }
-        public int ShipId { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
         public bool IsMargin { get; set; }
+
+        public int ShipId { get; set; }
         [ForeignKey("ShipId")]
         public Ship Ship { get; set; }
     }
