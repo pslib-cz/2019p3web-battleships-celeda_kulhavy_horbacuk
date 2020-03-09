@@ -27,23 +27,22 @@ namespace BattleShips
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-
             services.AddDbContext<ApplicationDbContext>(o =>
             {
-                o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                o.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddDefaultIdentity<IdentityUser>(o => {
+            services.AddDefaultIdentity<User>(o => {
                 o.SignIn.RequireConfirmedEmail = false;
                 o.SignIn.RequireConfirmedAccount = false;
                 o.Password.RequireDigit = false;
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 4;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,8 +64,9 @@ namespace BattleShips
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

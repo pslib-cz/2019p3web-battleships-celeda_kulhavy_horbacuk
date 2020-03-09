@@ -19,11 +19,7 @@ namespace BattleShips.Model
         public User CurrentUser { get; set; }
         [ForeignKey("OwnerId")]
         public User User { get; set; }
-        public enum GameState
-        { 
-            Setup = 0,
-            Battle = 1,
-            End = 2
-        }
+        public ICollection<UserGame> Users { get; set; }
+        public GameState GameState { get; set; }
     }
 }

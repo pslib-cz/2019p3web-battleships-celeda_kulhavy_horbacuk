@@ -14,11 +14,5 @@ namespace BattleShips.Model
         public Game Game { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
-        public enum PlayerState
-        { 
-            PlacingShip = 0,
-            Waiting = 1,
-            Firing = 2
-        }
     }
 }
