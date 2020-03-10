@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Game\CreateGame - Kopie.cshtml.cs" />
+    <Compile Remove="Pages\Game\Index.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Game\CreateGame - Kopie.cshtml" />
+    <Content Remove="Pages\Game\Index.cshtml" />
+    <Content Remove="Pages\Game\Index1.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Images\1486722.jpg" />
   </ItemGroup>
 
