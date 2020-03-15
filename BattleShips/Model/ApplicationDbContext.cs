@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BattleShips.Model
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Game> Games { get; set; }
         public DbSet<UserGame> UserGames { get; set; }
@@ -16,7 +16,6 @@ namespace BattleShips.Model
         public DbSet<ShipPiece> ShipPieces { get; set; }
         public DbSet<ShipUserPlaced> ShipUsersPlaced { get; set; }
         public DbSet<ShipUserNotPlaced> ShipUsersNotPlaced { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<NavyBattlePiece> NavyBattlePieces { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -24,12 +23,23 @@ namespace BattleShips.Model
 
         }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserGame>()
-                .HasKey(ug => new { ug.UserId, ug.GameId });
+            modelBuilder.Entity<Game>()
+                .HasOne(g => g.PlayerOnTurn)
+                .WithMany(u => u.GamesOnTurn)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.GamesOnTurn)
+                .WithOne(g => g.PlayerOnTurn);
+
+            //složený klíč by to v programu jen komplikoval, i když v DB by to řešilo některé nepovolené kombinace...
+            //modelBuilder.Entity<UserGame>()
+            //    .HasKey(ug => new { ug.UserId, ug.GameId });
             
             modelBuilder.Entity<UserGame>()
                 .HasOne(ug => ug.User)
@@ -43,23 +53,22 @@ namespace BattleShips.Model
                 .HasForeignKey(ug => ug.GameId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<ShipGame>()
-                .HasKey(sg => new { sg.ShipId, sg.GameId });
+            //toto ve skutečnosti nechceme - nešly by vložit dvě lodě stejného typu do jedné hry
+            //modelBuilder.Entity<ShipGame>()
+            //    .HasKey(sg => new { sg.ShipId, sg.GameId });
 
             modelBuilder.Entity<ShipGame>()
                 .HasOne(sg => sg.Ship)
-                .WithMany(s => s.UserGames) //dodělat
-                .HasForeignKey(sg => sg.ShipId)
+                .WithMany(s => s.ShipGames)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipGame>()
                 .HasOne(sg => sg.UserGame)
-                .WithMany(g => g.ShipGames)
-                .HasForeignKey(sg => sg.GameId)
+                .WithMany(ug => ug.ShipsForGame)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<ShipUserPlaced>()
-                .HasKey(su => new { su.ShipId, su.UserId });
+            //modelBuilder.Entity<ShipUserPlaced>()
+            //    .HasKey(su => new { su.ShipId, su.UserId });
 
             modelBuilder.Entity<ShipUserPlaced>()
                 .HasOne(su => su.Ship)

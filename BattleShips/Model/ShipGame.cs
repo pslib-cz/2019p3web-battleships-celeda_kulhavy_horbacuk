@@ -19,8 +19,5 @@ namespace BattleShips.Model
         public Guid GameId { get; set; }
         [ForeignKey("GameId")]
         public UserGame UserGame { get; set; }
-
-        public ICollection<User> Users { get; set; }
-        public ICollection<UserGame> UserGames { get; set; }
     }
 }

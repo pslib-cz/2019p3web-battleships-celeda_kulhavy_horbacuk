@@ -9,10 +9,8 @@ namespace BattleShips.Model
 {
     public class User : IdentityUser
     {
-        [Key]
-        public IdentityUser IdentityUser { get; set; }
-
-        public ICollection<Game> Game { get; set; }
+        public ICollection<Game> CreatedGames { get; set; }
+        public ICollection<Game> GamesOnTurn { get; set; }
         public ICollection<UserGame> Games { get; set; }
         public ICollection<ShipUserPlaced> ShipUserPlaceds { get; set; }
         public ICollection<ShipUserNotPlaced> ShipUserNotPlaced { get; set; }
