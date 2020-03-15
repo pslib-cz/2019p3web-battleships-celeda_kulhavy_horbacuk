@@ -24,13 +24,6 @@ namespace BattleShips.Model
         public Ship Ship { get; set; }
 
         public bool Hidden { get; set; }
-        public enum PieceState
-        { 
-            Water = 0,
-            Ship = 1,
-            DeadWater = 2,
-            DeadShip = 3,
-            Margin = 4
-        }
+        public PieceState PieceState { get; set; }
     }
 }

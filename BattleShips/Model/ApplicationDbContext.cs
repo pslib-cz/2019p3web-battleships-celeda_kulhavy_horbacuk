@@ -14,7 +14,9 @@ namespace BattleShips.Model
         public DbSet<Ship> Ships { get; set; }
         public DbSet<ShipGame> ShipGames { get; set; }
         public DbSet<ShipPiece> ShipPieces { get; set; }
-        public DbSet<ShipUser> ShipUsers { get; set; }
+        public DbSet<ShipUserPlaced> ShipUsersPlaced { get; set; }
+        public DbSet<ShipUserNotPlaced> ShipUsersNotPlaced { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<NavyBattlePiece> NavyBattlePieces { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -27,7 +29,7 @@ namespace BattleShips.Model
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UserGame>()
-            .HasKey(ug => new { ug.UserId, ug.GameId });
+                .HasKey(ug => new { ug.UserId, ug.GameId });
             
             modelBuilder.Entity<UserGame>()
                 .HasOne(ug => ug.User)
@@ -38,6 +40,45 @@ namespace BattleShips.Model
                 .HasOne(ug => ug.Game)
                 .WithMany(g => g.UserGames)
                 .HasForeignKey(ug => ug.GameId);
+
+            modelBuilder.Entity<ShipGame>()
+                .HasKey(sg => new { sg.ShipId, sg.GameId });
+
+            modelBuilder.Entity<ShipGame>()
+                .HasOne(sg => sg.Ship)
+                .WithMany(s => s.UserGames) //dodělat
+                .HasForeignKey(sg => sg.ShipId);
+
+            modelBuilder.Entity<ShipGame>()
+                .HasOne(sg => sg.UserGame)
+                .WithMany(g => g.ShipGames)
+                .HasForeignKey(sg => sg.GameId);
+
+            modelBuilder.Entity<ShipUserPlaced>()
+                .HasKey(su => new { su.ShipId, su.UserId });
+
+            modelBuilder.Entity<ShipUserPlaced>()
+                .HasOne(su => su.Ship)
+                .WithMany(s => s.Users) //dodělat
+                .HasForeignKey(su => su.ShipId);
+
+            modelBuilder.Entity<ShipUserPlaced>()
+                .HasOne(su => su.User)
+                .WithMany(u => u.ShipUserPlaceds)
+                .HasForeignKey(su => su.UserId);
+
+            modelBuilder.Entity<ShipUserNotPlaced>()
+               .HasKey(su => new { su.ShipId, su.UserId });
+
+            modelBuilder.Entity<ShipUserNotPlaced>()
+                .HasOne(su => su.Ship)
+                .WithMany(s => s.Users) //dodělat
+                .HasForeignKey(su => su.ShipId);
+
+            modelBuilder.Entity<ShipUserNotPlaced>()
+                .HasOne(su => su.User)
+                .WithMany(u => u.ShipUserNotPlaced)
+                .HasForeignKey(su => su.UserId);
         }
     }
 }

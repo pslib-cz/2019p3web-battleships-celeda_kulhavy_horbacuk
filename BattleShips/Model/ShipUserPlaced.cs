@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace BattleShips.Model
 {
-    public class ShipUser
+    public class ShipUserPlaced
     {
-        [Key]
-        public int Id { get; set; }
         public int ShipId { get; set; }
         [ForeignKey("ShipId")]
         public Ship Ship { get; set; }
 
         public int UserId { get; set; }
         [ForeignKey("UserId")]
-        public UserGame UserGame { get; set; }
+        public User User { get; set; }
     }
 }
