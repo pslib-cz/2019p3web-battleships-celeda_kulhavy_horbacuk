@@ -11,7 +11,7 @@ namespace BattleShips.Model
     public class ShipUserPlaced
     {
         [Key]
-        public int ShipUserId { get; set; }
+        public int Id { get; set; }
 
         public int ShipId { get; set; }
         [ForeignKey("ShipId")]
