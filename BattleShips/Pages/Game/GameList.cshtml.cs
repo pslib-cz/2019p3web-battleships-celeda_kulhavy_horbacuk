@@ -11,7 +11,11 @@ namespace BattleShips
     {
         public void OnGet()
         {
-
+            //příklad
+            var user = this.HttpContext.User
+                .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";
+            var user2 = this.HttpContext.User
+                .FindFirst(System.Security.Claims.ClaimTypes.Anonymous)?.Value ?? "";
         }
     }
 }
