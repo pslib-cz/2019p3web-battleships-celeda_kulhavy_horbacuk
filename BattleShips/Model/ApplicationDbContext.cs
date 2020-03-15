@@ -34,12 +34,14 @@ namespace BattleShips.Model
             modelBuilder.Entity<UserGame>()
                 .HasOne(ug => ug.User)
                 .WithMany(u => u.Games)
-                .HasForeignKey(ug => ug.UserId);
+                .HasForeignKey(ug => ug.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserGame>()
                 .HasOne(ug => ug.Game)
                 .WithMany(g => g.UserGames)
-                .HasForeignKey(ug => ug.GameId);
+                .HasForeignKey(ug => ug.GameId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipGame>()
                 .HasKey(sg => new { sg.ShipId, sg.GameId });
@@ -47,12 +49,14 @@ namespace BattleShips.Model
             modelBuilder.Entity<ShipGame>()
                 .HasOne(sg => sg.Ship)
                 .WithMany(s => s.UserGames) //dodělat
-                .HasForeignKey(sg => sg.ShipId);
+                .HasForeignKey(sg => sg.ShipId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipGame>()
                 .HasOne(sg => sg.UserGame)
                 .WithMany(g => g.ShipGames)
-                .HasForeignKey(sg => sg.GameId);
+                .HasForeignKey(sg => sg.GameId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipUserPlaced>()
                 .HasKey(su => new { su.ShipId, su.UserId });
@@ -60,12 +64,14 @@ namespace BattleShips.Model
             modelBuilder.Entity<ShipUserPlaced>()
                 .HasOne(su => su.Ship)
                 .WithMany(s => s.Users) //dodělat
-                .HasForeignKey(su => su.ShipId);
+                .HasForeignKey(su => su.ShipId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipUserPlaced>()
                 .HasOne(su => su.User)
                 .WithMany(u => u.ShipUserPlaceds)
-                .HasForeignKey(su => su.UserId);
+                .HasForeignKey(su => su.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipUserNotPlaced>()
                .HasKey(su => new { su.ShipId, su.UserId });
@@ -73,12 +79,14 @@ namespace BattleShips.Model
             modelBuilder.Entity<ShipUserNotPlaced>()
                 .HasOne(su => su.Ship)
                 .WithMany(s => s.Users) //dodělat
-                .HasForeignKey(su => su.ShipId);
+                .HasForeignKey(su => su.ShipId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipUserNotPlaced>()
                 .HasOne(su => su.User)
                 .WithMany(u => u.ShipUserNotPlaced)
-                .HasForeignKey(su => su.UserId);
+                .HasForeignKey(su => su.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
