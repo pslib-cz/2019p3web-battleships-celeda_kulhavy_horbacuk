@@ -15,7 +15,6 @@ namespace BattleShips.Model
         public DbSet<ShipGame> ShipGames { get; set; }
         public DbSet<ShipPiece> ShipPieces { get; set; }
         public DbSet<ShipUserPlaced> ShipUsersPlaced { get; set; }
-        public DbSet<ShipUserNotPlaced> ShipUsersNotPlaced { get; set; }
         public DbSet<NavyBattlePiece> NavyBattlePieces { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -67,35 +66,20 @@ namespace BattleShips.Model
                 .WithMany(ug => ug.ShipsForGame)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<ShipUserPlaced>()
+                .HasOne(su => su.User)
+                .WithMany(u => u.Ships)
+                .HasForeignKey(su => su.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ShipUserPlaced>()
+                .HasOne(su => su.Ship)
+                .WithMany(s => s.PlacedShips)
+                .HasForeignKey(su => su.ShipId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             //modelBuilder.Entity<ShipUserPlaced>()
             //    .HasKey(su => new { su.ShipId, su.UserId });
-
-            modelBuilder.Entity<ShipUserPlaced>()
-                .HasOne(su => su.Ship)
-                .WithMany(s => s.Users) //dodělat
-                .HasForeignKey(su => su.ShipId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<ShipUserPlaced>()
-                .HasOne(su => su.User)
-                .WithMany(u => u.ShipUserPlaceds)
-                .HasForeignKey(su => su.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<ShipUserNotPlaced>()
-               .HasKey(su => new { su.ShipId, su.UserId });
-
-            modelBuilder.Entity<ShipUserNotPlaced>()
-                .HasOne(su => su.Ship)
-                .WithMany(s => s.Users) //dodělat
-                .HasForeignKey(su => su.ShipId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<ShipUserNotPlaced>()
-                .HasOne(su => su.User)
-                .WithMany(u => u.ShipUserNotPlaced)
-                .HasForeignKey(su => su.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

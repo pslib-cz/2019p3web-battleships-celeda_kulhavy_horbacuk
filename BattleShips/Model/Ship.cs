@@ -13,13 +13,7 @@ namespace BattleShips.Model
         public string Name { get; set; }
         public ICollection<ShipPiece> ShipPieces { get; set; }
         public ICollection<ShipGame> ShipGames { get; set; }
-
+        public ICollection<ShipUserPlaced> PlacedShips { get; set; }
         public ICollection<NavyBattlePiece> NavyBattlePieces { get; set; }
-
-
-        //bude toto opravdu potřeba?
-        public ICollection<ShipUserPlaced> ShipUsers { get; set; }
-        public ICollection<ShipUserNotPlaced> ShipUserNotPlaceds { get; set; }
-
     }
 }

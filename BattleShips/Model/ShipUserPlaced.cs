@@ -10,12 +10,16 @@ namespace BattleShips.Model
 {
     public class ShipUserPlaced
     {
+        [Key]
+        public int ShipUserId { get; set; }
+
         public int ShipId { get; set; }
         [ForeignKey("ShipId")]
         public Ship Ship { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
+        public ICollection<Ship> Ships { get; set; }
     }
 }

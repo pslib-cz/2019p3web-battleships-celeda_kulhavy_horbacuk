@@ -15,11 +15,11 @@ namespace BattleShips.Model
         public int PosX { get; set; }
         public int PosY { get; set; }
 
-        public string UserGameId { get; set; }
+        public Guid UserGameId { get; set; }
         [ForeignKey("UserGameId")]
         public UserGame UserGame { get; set; }
 
-        public int ShipId { get; set; } //Type
+        public int ShipId { get; set; } //TypeId
         [ForeignKey("ShipId")]
         public Ship Ship { get; set; }
 
