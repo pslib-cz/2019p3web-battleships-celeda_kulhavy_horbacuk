@@ -10,7 +10,7 @@ namespace BattleShips.Model
     public class UserGame
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public Guid GameId { get; set; }
         [ForeignKey("GameId")]
@@ -21,7 +21,6 @@ namespace BattleShips.Model
         public User User { get; set; }
 
         public ICollection<NavyBattlePiece> NavyBattlePieces { get; set; }
-        public ICollection<ShipGame> ShipsForGame { get; set; }
         public ICollection<ShipUserPlaced> PlacedShips { get; set; }
 
         public PlayerState PlayerState { get; set; }

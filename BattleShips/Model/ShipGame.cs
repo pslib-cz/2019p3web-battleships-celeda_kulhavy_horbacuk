@@ -17,7 +17,7 @@ namespace BattleShips.Model
         public Ship Ship { get; set; }
 
         public Guid GameId { get; set; }
-        [ForeignKey("GameId")]
-        public UserGame UserGame { get; set; }
+        [ForeignKey("UserGameId")]
+        public Game Game { get; set; }
     }
 }

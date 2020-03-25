@@ -3,14 +3,16 @@ using System;
 using BattleShips.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BattleShips.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200323114446_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,9 +117,9 @@ namespace BattleShips.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameId");
-
                     b.HasIndex("ShipId");
+
+                    b.HasIndex("UserGameId");
 
                     b.ToTable("ShipGames");
                 });
@@ -434,17 +436,16 @@ namespace BattleShips.Migrations
 
             modelBuilder.Entity("BattleShips.Model.ShipGame", b =>
                 {
-                    b.HasOne("BattleShips.Model.Game", "Game")
-                        .WithMany("ShipsForGame")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("BattleShips.Model.Ship", "Ship")
                         .WithMany("ShipGames")
                         .HasForeignKey("ShipId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("BattleShips.Model.Game", "Game")
+                        .WithMany("ShipsForGame")
+                        .HasForeignKey("UserGameId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("BattleShips.Model.ShipPiece", b =>

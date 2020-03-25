@@ -59,17 +59,19 @@ namespace BattleShips.Model
             modelBuilder.Entity<ShipGame>()
                 .HasOne(sg => sg.Ship)
                 .WithMany(s => s.ShipGames)
+                .HasForeignKey(su => su.ShipId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipGame>()
-                .HasOne(sg => sg.UserGame)
+                .HasOne(sg => sg.Game)
                 .WithMany(ug => ug.ShipsForGame)
+                .HasForeignKey(su => su.GameId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipUserPlaced>()
-                .HasOne(su => su.User)
-                .WithMany(u => u.Ships)
-                .HasForeignKey(su => su.UserId)
+                .HasOne(su => su.UserGame)
+                .WithMany(u => u.PlacedShips)
+                .HasForeignKey(su => su.UserGameId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ShipUserPlaced>()

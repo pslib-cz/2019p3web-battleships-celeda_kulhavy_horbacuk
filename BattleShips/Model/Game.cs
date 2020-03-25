@@ -25,6 +25,8 @@ namespace BattleShips.Model
         public User Owner { get; set; }
 
         public ICollection<UserGame> UserGames { get; set; }
+        public ICollection<ShipGame> ShipsForGame { get; set; }
+
         public GameState GameState { get; set; }
     }
 }

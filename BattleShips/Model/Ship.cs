@@ -15,5 +15,6 @@ namespace BattleShips.Model
         public ICollection<ShipGame> ShipGames { get; set; }
         public ICollection<ShipUserPlaced> PlacedShips { get; set; }
         public ICollection<NavyBattlePiece> NavyBattlePieces { get; set; }
+        public ICollection<UserGame> UserGames { get; set; }
     }
 }
