@@ -10,6 +10,7 @@ namespace BattleShips.Model
     {
         [Key]
         public int Id { get; set; }
+        public int Count { get; set; }
         public string Name { get; set; }
         public ICollection<ShipPiece> ShipPieces { get; set; }
         public ICollection<ShipGame> ShipGames { get; set; }

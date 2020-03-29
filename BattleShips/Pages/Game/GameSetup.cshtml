@@ -10,9 +10,16 @@
             <h1>Nastavení hry</h1>
             <div class="info-box">
                 <p>
-                    
-                </p>
-            </div>
+                    <h3>Výběr počtu lodí</h3>
+                    @foreach (var item in Model.Ships)
+                    {
+                        <tr>
+                            <th>@item.Name</th>
+                            <th><Select asp-for="Ships.Count"></Select></th>
+                        </tr>
+                    }
+            </p>
+</div>
         </header>
 
         <a class="btn btn-success">Dokončení nastavení hry</a>
