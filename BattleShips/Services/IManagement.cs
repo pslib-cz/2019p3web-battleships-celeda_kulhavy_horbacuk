@@ -10,9 +10,8 @@ namespace BattleShips.Services
     {
         //vytvoreni novy hry, prihlasovani, vypis, odhlasovani, hlavni stranka 
         //Kulhavý
-        IEnumerable<User> GetUsers(string userId);
-        IEnumerable<Game> GetGames(Guid gameId);
-        IEnumerable<Game> GetGames(int? gameFilter);
+        List<User> GetUsers(string userId);
+        List<Game> GetGames(Guid gameId);
         List<Game> GetGameDetails(Guid gameId);
         bool RemoveGame(Guid Id);
         bool AddGame(Game Game);

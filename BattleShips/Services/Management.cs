@@ -8,6 +8,12 @@ namespace BattleShips.Services
 {
     public class Management : IManagement
     {
+        public ApplicationDbContext _db;
+        public Management(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public bool AddGame(Game Game)
         {
             throw new NotImplementedException();
@@ -38,24 +44,32 @@ namespace BattleShips.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Game> GetGames(Guid gameId)
+        public List<Game> GetGames(Guid gameId)
         {
-            throw new NotImplementedException();
+            IQueryable<Game> games = _db.Games;
+            if (gameId != null)
+            {
+                games = games.Where(i => i.GameId.Equals(gameId));
+            }
+            return games.ToList();
         }
 
-        public IEnumerable<Game> GetGames(int? gameFilter)
+        public List<User> GetUsers(string userId)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<User> GetUsers(string userId)
-        {
-            throw new NotImplementedException();
+            IQueryable<User> users = _db.Users;
+            if (userId != null)
+            {
+                users = users.Where(i => i.Id.Equals(userId));
+            }
+            return users.ToList();
         }
 
         public bool RemoveGame(Guid Id)
         {
-            throw new NotImplementedException();
+            var trida = _db.Games.SingleOrDefault(c => c.GameId == Id);
+            _db.Games.Remove(trida);
+            _db.SaveChanges();
+            return true;
         }
 
         public bool RemoveUserFromGame(string userId)
