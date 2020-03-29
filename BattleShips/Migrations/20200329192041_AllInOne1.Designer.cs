@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleShips.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200323115850_third")]
-    partial class third
+    [Migration("20200329192041_AllInOne1")]
+    partial class AllInOne1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,6 +85,9 @@ namespace BattleShips.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Count")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -256,12 +259,17 @@ namespace BattleShips.Migrations
                     b.Property<int>("PlayerState")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ShipId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
+
+                    b.HasIndex("ShipId");
 
                     b.HasIndex("UserId");
 
@@ -488,6 +496,10 @@ namespace BattleShips.Migrations
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("BattleShips.Model.Ship", null)
+                        .WithMany("UserGames")
+                        .HasForeignKey("ShipId");
 
                     b.HasOne("BattleShips.Model.User", "User")
                         .WithMany("Games")

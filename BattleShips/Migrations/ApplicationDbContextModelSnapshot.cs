@@ -85,6 +85,9 @@ namespace BattleShips.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -254,12 +257,17 @@ namespace BattleShips.Migrations
                     b.Property<int>("PlayerState")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ShipId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
+
+                    b.HasIndex("ShipId");
 
                     b.HasIndex("UserId");
 
@@ -486,6 +494,10 @@ namespace BattleShips.Migrations
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("BattleShips.Model.Ship", null)
+                        .WithMany("UserGames")
+                        .HasForeignKey("ShipId");
 
                     b.HasOne("BattleShips.Model.User", "User")
                         .WithMany("Games")
