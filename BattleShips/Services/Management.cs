@@ -16,7 +16,9 @@ namespace BattleShips.Services
 
         public bool AddGame(Game Game)
         {
-            throw new NotImplementedException();
+            _db.Games.Add(Game);
+            _db.SaveChanges();
+            return true;
         }
 
         public bool AddUser(User user)
@@ -26,7 +28,8 @@ namespace BattleShips.Services
 
         public Game CreateNewGame(string userId, Guid gameId, int maxPlayers, int boardSize)
         {
-            throw new NotImplementedException();
+            Guid newGameId = Guid.NewGuid();
+            return new Game() { OwnerId = userId, GameId = newGameId, MaxPlayers = maxPlayers, GameSize = boardSize };
         }
 
         public User CreateNewUser(string userId, string Name)
