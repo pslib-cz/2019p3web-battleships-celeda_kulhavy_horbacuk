@@ -11,7 +11,7 @@ namespace BattleShips.Services
         //vytvoreni novy hry, prihlasovani, vypis, odhlasovani, hlavni stranka 
         //Kulhavý
         List<User> GetUsers(string userId);
-        List<Game> GetGames(Guid gameId);
+        List<Game> GetGames(Guid? gameId);
         List<Game> GetGameDetails(Guid gameId);
         bool RemoveGame(Guid Id);
         bool AddGame(Game Game);

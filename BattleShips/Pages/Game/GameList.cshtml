@@ -15,25 +15,24 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Vytvořeno</th>
-                            <th>Stav hry</th>
-                            <th>Hráč 1</th>
-                            <th>Hráč 2</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].GameCreatedAt)</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].GameState)</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].Player1)</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].Player2)</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!--For na generování tabulky-->
-                        <tr>
-                            <td><a title="Detail hry" href="/Game/Details"></a></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <a>(smazat)</a> <!--Smazání hry ze seznamu-->
-                                <a>(pokračovat)</a> <!--Vstoupit do hry-->
-                            </td>
-                        </tr>
+                        @foreach (var item in Model.GameLists)
+                        {
+                            <tr>
+                                <td>@item.GameCreatedAt)</td>
+                                <td>@item.GameState</td>
+                                <td>@item.Player1</td>
+                                <td>@item.Player2</td>
+                                <th></th>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -43,20 +42,23 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>GameCreatedAt</th>
-                            <th>GameState</th>
-                            <th>Player1</th>
-                            <th>Player2</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].GameCreatedAt)</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].GameState)</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].Player1)</th>
+                            <th>@Html.DisplayNameFor(i => i.GameLists[0].Player2)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <!--For na generování tabluky-->
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a>(připojit)</a></td>
-                        </tr>
+                        @foreach (var item in Model.GameLists)
+                        {
+                            <tr>
+                                <td>@item.GameCreatedAt)</td>
+                                <td>@item.GameState</td>
+                                <td>@item.Player1</td>
+                                <td>@item.Player2</td>
+                                <th></th>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

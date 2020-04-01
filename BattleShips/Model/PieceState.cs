@@ -11,6 +11,6 @@ namespace BattleShips.Model
         Ship = 1,
         DeadWater = 2,
         DeadShip = 3,
-        Margin = 4
+        Margin = 4,
     }
 }

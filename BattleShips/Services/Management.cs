@@ -42,12 +42,12 @@ namespace BattleShips.Services
             throw new NotImplementedException();
         }
 
-        public List<Game> GetGameDetails(Guid gameId)
+        public List<InGame> GetGameDetails(Guid gameId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Game> GetGames(Guid gameId)
+        public List<Game> GetGames(Guid? gameId)
         {
             IQueryable<Game> games = _db.Games;
             if (gameId != null)

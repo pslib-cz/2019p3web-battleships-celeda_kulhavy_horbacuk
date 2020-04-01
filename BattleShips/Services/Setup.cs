@@ -12,7 +12,7 @@ namespace BattleShips.Services
         public int HowManyShips { get; set; }
         public List<Ship> AddShip { get; set; }
 
-        public Game GetGame(int id)
+        public InGame GetGame(int id)
         {
             throw new NotImplementedException();
         }
