@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BattleShips.Model;
+using BattleShips.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +41,7 @@ namespace BattleShips
                 o.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped<Identity>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddRazorPages();

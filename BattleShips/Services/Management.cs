@@ -9,9 +9,12 @@ namespace BattleShips.Services
     public class Management : IManagement
     {
         public ApplicationDbContext _db;
-        public Management(ApplicationDbContext db)
+        public Identity _identity;
+
+        public Management(ApplicationDbContext db, Identity identity)
         {
             _db = db;
+            _identity = identity;
         }
 
         public bool AddGame(Game Game)
@@ -76,6 +79,11 @@ namespace BattleShips.Services
         }
 
         public bool RemoveUserFromGame(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Game> IManagement.GetGameDetails(Guid gameId)
         {
             throw new NotImplementedException();
         }

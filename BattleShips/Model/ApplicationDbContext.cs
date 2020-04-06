@@ -36,10 +36,19 @@ namespace BattleShips.Model
                 .HasMany(u => u.GamesOnTurn)
                 .WithOne(g => g.PlayerOnTurn);
 
+            modelBuilder.Entity<Game>()
+                .HasOne(g => g.Owner)
+                .WithMany(u => u.GamesOnTurn)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.GamesOnTurn)
+                .WithOne(g => g.Owner);
+
             //složený klíč by to v programu jen komplikoval, i když v DB by to řešilo některé nepovolené kombinace...
             //modelBuilder.Entity<UserGame>()
             //    .HasKey(ug => new { ug.UserId, ug.GameId });
-            
+
             modelBuilder.Entity<UserGame>()
                 .HasOne(ug => ug.User)
                 .WithMany(u => u.Games)

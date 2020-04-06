@@ -24,11 +24,11 @@ namespace BattleShips.Services
             throw new NotImplementedException();
         }
 
-        public void Fire(int navyBattlePieceId, PieceState pieceState)
+        public void Fire(int navyBattlePieceId)
         {
             NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
             PieceState newState;
-            switch(pieceState)
+            switch(battlePiece.PieceState)
             {
                 case PieceState.Ship:
                     newState = PieceState.DeadShip;
@@ -40,7 +40,7 @@ namespace BattleShips.Services
                     newState = PieceState.DeadWater;
                     break;
                 default:
-                    newState = PieceState.Water;
+                    newState = battlePiece.PieceState;
                     break;
             }
             battlePiece.PieceState = newState;
