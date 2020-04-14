@@ -9,8 +9,32 @@ namespace BattleShips.Services
 {
     public class Setup : ISetup
     {
-        public int HowManyShips { get; set; }
-        public List<Ship> AddShip { get; set; }
+        public ApplicationDbContext _db;
+        public Setup(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
+        public ShipGame CreateShipGame(int shipid, Guid gameid)
+        {
+            var ship = _db.Ships.SingleOrDefault(s => s.Id == shipid);
+            var game = _db.Games.SingleOrDefault(g => g.GameId == gameid);
+            return new ShipGame() { Ship = ship, Game = game };
+        }
+        public bool AddShipGame(int shipid, Guid gameid)
+        {
+            var shipgame = CreateShipGame(shipid, gameid);
+            _db.SaveChanges();
+            return true;
+        }
+        public bool AddShipGame(ShipGame shipGame)
+        {
+            var shipgame = _db.ShipGames.SingleOrDefault(s => s.ShipId == shipGame.ShipId && s.GameId == shipGame.GameId);
+            if (!(shipgame is null)) return false;
+            _db.ShipGames.Add(shipGame);
+            _db.SaveChanges();
+            return true;
+        }
 
         public InGame GetGame(int id)
         {

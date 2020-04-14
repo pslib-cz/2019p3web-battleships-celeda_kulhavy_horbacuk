@@ -9,19 +9,35 @@
         <header class="game-header">
             <h1>Nastavení hry</h1>
             <div class="info-box">
-                <p>
-                    <h3>Výběr počtu lodí</h3>
-                    @foreach (var item in Model.Ships)
-                    {
-                        <tr>
-                            <th>@item.Name</th>
-                            <th><Select asp-for="Ships.Count"></Select></th>
-                        </tr>
-                    }
-            </p>
-</div>
+                    <h3>Výběr lodí</h3>
+            </div>
         </header>
-
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Název lodi</th>
+                    <th>Počet lodí</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Ships)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <select asp-for="@item.Count" class="col-form-label">
+                                <option value="null">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                    </tr>
+                } 
+            </tbody>
+        </table>
         <a class="btn btn-success">Dokončení nastavení hry</a>
     </main>
 </div>

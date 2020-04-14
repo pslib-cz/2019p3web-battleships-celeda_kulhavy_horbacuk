@@ -26,6 +26,11 @@ namespace BattleShips.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Ship>().HasData(new Ship { Id = 1, Name = "Torpédoborec" });
+            modelBuilder.Entity<Ship>().HasData(new Ship { Id = 2, Name = "Ponorka" });
+            modelBuilder.Entity<Ship>().HasData(new Ship { Id = 3, Name = "Křižník" });
+            modelBuilder.Entity<Ship>().HasData(new Ship { Id = 4, Name = "Bitevní loď" });
+            modelBuilder.Entity<Ship>().HasData(new Ship { Id = 5, Name = "Letadlová loď" });
 
             modelBuilder.Entity<Game>()
                 .HasOne(g => g.PlayerOnTurn)

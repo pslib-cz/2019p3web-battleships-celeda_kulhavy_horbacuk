@@ -13,7 +13,8 @@ namespace BattleShips.Services
         public UserGame GetUserGame(string userId, int gameId);
         public void ShipsReady(); //Rozmistěni lodi na herni plochu
         public void Ready(); //Konrola jestli všichni už jsou připraveny ke hře
-        public int HowManyShips { get; set; }
-        List<Ship> AddShip { get; set; }
+        public ShipGame CreateShipGame(int shipid, Guid gameid);
+        public bool AddShipGame(ShipGame shipGame);
+        public bool AddShipGame(int shipid, Guid gameid);
     }
 }
