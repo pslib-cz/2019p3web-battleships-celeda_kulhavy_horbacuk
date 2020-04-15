@@ -17,22 +17,25 @@ namespace BattleShips.Services
             _identity = identity;
         }
 
-        public bool AddGame(Game Game)
-        {
-            _db.Games.Add(Game);
-            _db.SaveChanges();
-            return true;
-        }
 
         public bool AddUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public Game CreateNewGame(string userId, Guid gameId, int maxPlayers, int boardSize)
+        public bool CreateNewGame(string userId, Guid gameId, int boardSize)
         {
             Guid newGameId = Guid.NewGuid();
-            return new Game() { OwnerId = userId, GameId = newGameId, MaxPlayers = maxPlayers, GameSize = boardSize };
+            var game = new Game() { OwnerId = userId, GameId = newGameId, GameSize = boardSize };
+            _db.Games.Add(game);
+            _db.SaveChanges();
+            return true;
+        }
+
+        public UserGame UserCreateGame(string userId, Guid gameId)
+        {
+            Guid guid = Guid.NewGuid();
+            return new UserGame { UserId = userId, GameId = gameId };
         }
 
         public User CreateNewUser(string userId, string Name)
@@ -40,10 +43,6 @@ namespace BattleShips.Services
             throw new NotImplementedException();
         }
 
-        public UserGame CreateUserGame(string userId, Guid gameId)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<InGame> GetGameDetails(Guid gameId)
         {
