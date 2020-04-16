@@ -99,6 +99,38 @@ namespace BattleShips.Migrations
                     b.HasIndex("ShipUserPlacedId");
 
                     b.ToTable("Ships");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Count = 0,
+                            Name = "Torpédoborec"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Count = 0,
+                            Name = "Ponorka"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Count = 0,
+                            Name = "Křižník"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Count = 0,
+                            Name = "Bitevní loď"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Count = 0,
+                            Name = "Letadlová loď"
+                        });
                 });
 
             modelBuilder.Entity("BattleShips.Model.ShipGame", b =>
@@ -410,7 +442,8 @@ namespace BattleShips.Migrations
                 {
                     b.HasOne("BattleShips.Model.User", "Owner")
                         .WithMany("CreatedGames")
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("BattleShips.Model.User", "PlayerOnTurn")
                         .WithMany("GamesOnTurn")

@@ -43,11 +43,11 @@ namespace BattleShips.Model
 
             modelBuilder.Entity<Game>()
                 .HasOne(g => g.Owner)
-                .WithMany(u => u.GamesOnTurn)
+                .WithMany(u => u.CreatedGames)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<User>()
-                .HasMany(u => u.GamesOnTurn)
+                .HasMany(u => u.CreatedGames)
                 .WithOne(g => g.Owner);
 
             //složený klíč by to v programu jen komplikoval, i když v DB by to řešilo některé nepovolené kombinace...
