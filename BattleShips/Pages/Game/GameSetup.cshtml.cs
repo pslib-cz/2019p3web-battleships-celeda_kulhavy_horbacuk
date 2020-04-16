@@ -31,13 +31,16 @@ namespace BattleShips
         public void OnGet()
         {
             //_management.UserCreateGame(new UserGame() { UserId = User.Identity.Name, GameId =  });
+            Ships = new List<Ship>();
+            Ships = _isetup.GetShips();
+
         }
 
         public IActionResult OnPost()
         {
             Guid gameId = Guid.NewGuid();
             _isetup.AddShipGame(new ShipGame() { ShipId = Ship.Id, GameId = gameId });
-            _management.CreateNewGame(new Game() { OwnerId = User.Identity.Name, GameId = gameId, GameSize = boardSize});
+            //_management.CreateNewGame(new Game() { OwnerId = User.Identity.Name, GameId = gameId, GameSize = boardSize});
             return RedirectToPage("./ShipPlacement");
         }
     }

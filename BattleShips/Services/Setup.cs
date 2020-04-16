@@ -55,5 +55,9 @@ namespace BattleShips.Services
         {
             throw new NotImplementedException();
         }
+        public List<Ship> GetShips()
+        {
+            return _db.Ships.ToList();
+        }
     }
 }

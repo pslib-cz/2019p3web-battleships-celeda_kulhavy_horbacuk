@@ -16,5 +16,6 @@ namespace BattleShips.Services
         public ShipGame CreateShipGame(int shipid, Guid gameid);
         public bool AddShipGame(ShipGame shipGame);
         public bool AddShipGame(int shipid, Guid gameid);
+        public List<Ship> GetShips();
     }
 }

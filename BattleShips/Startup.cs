@@ -42,6 +42,8 @@ namespace BattleShips
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<Identity>();
+            services.AddTransient<IManagement, Management>();
+            services.AddTransient<ISetup, Setup>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddRazorPages();

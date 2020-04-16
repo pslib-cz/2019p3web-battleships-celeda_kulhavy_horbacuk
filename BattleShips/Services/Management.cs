@@ -86,5 +86,10 @@ namespace BattleShips.Services
         {
             throw new NotImplementedException();
         }
+
+        public bool AddGame(Game Game)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
