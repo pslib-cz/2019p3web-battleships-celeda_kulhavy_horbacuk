@@ -40,7 +40,7 @@ namespace BattleShips
         {
             //Guid gameId = Guid.NewGuid();
             //_isetup.AddShipGame(new ShipGame() { ShipId = Ship.Id, GameId = gameId });
-            //_management.CreateNewGame(new Game() { OwnerId = User.Identity.Name, GameId = gameId, GameSize = boardSize});
+            //_management.CreateNewGame(new Game() { OwnerId = User.Identity.Name, GameId = gameId, GameSize = boardSize });
             return RedirectToPage("./ShipPlacement");
         }
     }

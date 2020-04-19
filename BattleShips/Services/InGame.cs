@@ -1,4 +1,6 @@
-﻿using BattleShips.Model;
+﻿using BattleShips.Helpers;
+using BattleShips.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +10,14 @@ namespace BattleShips.Services
 {
     public class InGame : IGame
     {
-        private ApplicationDbContext _db;
-        public InGame(ApplicationDbContext db)
+        private readonly ApplicationDbContext _db;
+        private readonly ISession _session;
+        private readonly IHttpContextAccessor _http;
+        public InGame(ApplicationDbContext db, IHttpContextAccessor http)
         {
             _db = db;
+            _http = http;
+            _session = http.HttpContext.Session;
         }
 
         public void BoxCheck()
@@ -47,8 +53,19 @@ namespace BattleShips.Services
 
         //public void Water()
         //{ 
-            
+
         //}
+        public Guid LoadGame(string id)
+        {
+            Guid loadId = _session.Get<Guid>(id);
+            loadId = (Guid)Activator.CreateInstance(typeof(Guid));
+            return loadId;
+        }
+
+        public void SaveGame(string id, Guid guid)
+        {
+            _session.Set(id, guid);
+        }
 
         public void Fire(int navyBattlePieceId)
         {
