@@ -33,7 +33,10 @@ namespace BattleShips
             //_management.UserCreateGame(new UserGame() { UserId = User.Identity.Name, GameId =  });
             Ships = new List<Ship>();
             Ships = _isetup.GetShips();
-
+            var user = this.HttpContext.User
+                .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";
+            var user2 = this.HttpContext.User
+                .FindFirst(System.Security.Claims.ClaimTypes.Anonymous)?.Value ?? "";
         }
 
         public IActionResult OnPost()
