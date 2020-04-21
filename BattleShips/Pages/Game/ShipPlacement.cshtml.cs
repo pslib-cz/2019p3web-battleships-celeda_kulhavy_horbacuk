@@ -14,7 +14,7 @@ namespace BattleShips
         public ShipPlacementModel(InGame ingame)
         {
             _ingame = ingame;
-            Color = _ingame.PieceColorManagement;
+            Color = "blue";
         }
 
         public string Color { get; set; }
