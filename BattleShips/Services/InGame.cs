@@ -29,27 +29,29 @@ namespace BattleShips.Services
         {
             throw new NotImplementedException();
         }
-        //public string PieceColorManagement(int navyBattlePieceId)
-        //{
-        //    NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
+        public string PieceColorManagement(int navyBattlePieceId)
+        {
+            NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
 
-        //    switch (battlePiece.PieceState)
-        //    {
-        //        case PieceState.Ship:
-        //            return "black";
-        //        case PieceState.DeadShip:
-        //            return "red";
-        //        case PieceState.Water:
-        //            return ""
 
-        //        case PieceState.Margin:
 
-        //        default:
-        //            break;
-        //    }
+            switch (battlePiece.PieceState)
+            {
+                case PieceState.Ship:
+                    return "black";
+                case PieceState.DeadShip:
+                    return "red";
+                case PieceState.Water:
+                    return "";
 
-        //    _db.SaveChanges();
-        //}
+                case PieceState.Margin:
+
+                default:
+                    break;
+            }
+
+            _db.SaveChanges();
+        }
 
         //public void Water()
         //{ 

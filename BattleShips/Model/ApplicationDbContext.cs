@@ -32,6 +32,7 @@ namespace BattleShips.Model
             modelBuilder.Entity<Ship>().HasData(new Ship { Id = 4, Name = "Bitevní loď" });
             modelBuilder.Entity<Ship>().HasData(new Ship { Id = 5, Name = "Letadlová loď" });
 
+
             modelBuilder.Entity<Game>()
                 .HasOne(g => g.PlayerOnTurn)
                 .WithMany(u => u.GamesOnTurn)

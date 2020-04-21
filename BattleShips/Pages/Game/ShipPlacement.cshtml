@@ -15,13 +15,13 @@
             </div>
         </header>
         <table>
-            <tbody>
+            <tbody >
                 @for (var x = 0; x < 10; x++)
                 {
                     <tr>
                         @for (var y = 0; y < 10; y++)
                         {
-                            <td  class="border" style="background-color:dodgerblue"><button class="btn">@x @y</button> <!--Dodělat styly--></td>
+                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button class="btn"><a asp-page-handler="AddShip"></a></button></td>
                         }
                     </tr>
                 }
