@@ -44,6 +44,7 @@ namespace BattleShips
             services.AddScoped<Identity>();
             services.AddTransient<IManagement, Management>();
             services.AddTransient<ISetup, Setup>();
+            services.AddTransient<IGame, InGame>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddRazorPages();
