@@ -15,7 +15,7 @@ namespace BattleShips
         public ShipPlacementModel(ISetup isetup)
         {
             _isetup = isetup;
-            Color = "deepskyblue";
+            Color = "deepskyblue"; // asi tu ma byt spiš nějaky foreach ktery projde každy poličko (navybattlepiece) a vzhledem k hodnotě vlastnosti PieceState kdaždemu poličku se načte barva
         }
         public void OnGet()
         {
@@ -25,8 +25,16 @@ namespace BattleShips
                 .FindFirst(System.Security.Claims.ClaimTypes.Anonymous)?.Value ?? "";
         }
         public void OnGetAddShip()
-        { 
-            
+        {
+            //_isetup.AddShip();
+        }
+
+        public IActionResult OnGetStart()
+        {
+            //Ještě se zde rozmistěne lodě museji uložit do databaze nebo sessionu asi
+
+            //_isetup.MatginToWater();
+            return RedirectToPage("./InGame");
         }
     }
 }

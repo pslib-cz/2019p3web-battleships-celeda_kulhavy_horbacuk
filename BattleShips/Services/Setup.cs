@@ -38,7 +38,7 @@ namespace BattleShips.Services
 
         public string AddShipColorManagement(int navyBattlePieceId)
         {
-            NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
+            NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault(); // nevim jak tohle funguje takže nevim jestli to tu vubec ma bejt
 
             switch (battlePiece.PieceState)
             {
@@ -50,6 +50,25 @@ namespace BattleShips.Services
                     return "";
             }
         }
+
+        //Metody ktere by měli fungovat po předělani poliček na NavyBattlePiece:
+
+        //public void AddShip(int navyBattlePieceId)
+        //{
+        //    NavyBattlePiece battlePiece = //_db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault(); // nevim jak tohle funguje :(
+        //    battlePiece.PieceState = PieceState.Ship;
+        //}
+
+        //public void MarginToWater() //nevim jestli tahle metoda je spravně udělana :D
+        //{
+        //    foreach (NavyBattlePiece BattlePiece in _db.NavyBattlePieces)
+        //    {
+        //        if (BattlePiece.PieceState == PieceState.Margin)
+        //        {
+        //            BattlePiece.PieceState = PieceState.Water;
+        //        }
+        //    }
+        //}
 
         public InGame GetGame(int id)
         {

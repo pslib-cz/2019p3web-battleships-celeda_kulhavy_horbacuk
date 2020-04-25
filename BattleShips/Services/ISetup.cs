@@ -14,6 +14,8 @@ namespace BattleShips.Services
         public void ShipsReady(); //Rozmistěni lodi na herni plochu
         public void Ready(); //Konrola jestli všichni už jsou připraveny ke hře
         public string AddShipColorManagement(int navyBattlePieceId);
+        //public void AddShip();    // Přidavani vlastni lodi na plochu
+        //public void MarginToWater();  // Změna prazdnych poliček(battlepiecu) na vodu
         public ShipGame CreateShipGame(int shipid, Guid gameid);
         public bool AddShipGame(ShipGame shipGame);
         public bool AddShipGame(int shipid, Guid gameid);
