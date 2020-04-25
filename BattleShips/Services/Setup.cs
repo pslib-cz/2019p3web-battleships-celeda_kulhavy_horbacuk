@@ -36,6 +36,21 @@ namespace BattleShips.Services
             return true;
         }
 
+        public string AddShipColorManagement(int navyBattlePieceId)
+        {
+            NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
+
+            switch (battlePiece.PieceState)
+            {
+                case PieceState.Ship:
+                    return "black";
+                case PieceState.Margin:
+                    return "white";
+                default:
+                    return "";
+            }
+        }
+
         public InGame GetGame(int id)
         {
             throw new NotImplementedException();

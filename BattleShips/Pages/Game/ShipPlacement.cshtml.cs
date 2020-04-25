@@ -10,17 +10,15 @@ namespace BattleShips
 {
     public class ShipPlacementModel : PageModel
     {
-        public IGame _igame;
-        public ShipPlacementModel(IGame igame)
-        {
-            _igame = igame;
-            Color = "blue";
-        }
-
+        public ISetup _isetup;
         public string Color { get; set; }
-        public void OnGet(string color)
+        public ShipPlacementModel(ISetup isetup)
         {
-            Color = color;
+            _isetup = isetup;
+            Color = "deepskyblue";
+        }
+        public void OnGet()
+        {
             var user = this.HttpContext.User
                 .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";
             var user2 = this.HttpContext.User
