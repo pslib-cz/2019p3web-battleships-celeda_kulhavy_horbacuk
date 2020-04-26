@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BattleShips.Model;
 using BattleShips.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace BattleShips
 {
@@ -12,9 +14,12 @@ namespace BattleShips
     {
         public ISetup _isetup;
         public string Color { get; set; }
-        public ShipPlacementModel(ISetup isetup)
+        public DbSet<Game> Games;
+        public ApplicationDbContext _db;
+        public ShipPlacementModel(ISetup isetup, ApplicationDbContext db)
         {
             _isetup = isetup;
+            _db = db;
             Color = "deepskyblue"; // asi tu ma byt spiš nějaky foreach ktery projde každy poličko (navybattlepiece) a vzhledem k hodnotě vlastnosti PieceState kdaždemu poličku se načte barva
         }
         public void OnGet()
