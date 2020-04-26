@@ -1,8 +1,12 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using BattleShips.Model
 @model IndexModel
 @{
     ViewData["Title"] = "Login page";
 }
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +14,28 @@
     <link href="~/css/index.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="text-center jumbotron">
-        <h1 class="display-4">Battle ships</h1>
-        <div class="m-4 container">
-            <p>
-                Zde můžete
-                <a class="btn btn-primary" href="/Game/GameSetup">Vytvořit novou hru</a>
-                nebo
-                <a class="btn btn-primary" href="/Game/GameList">připojit se ke hře.</a>
-            </p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="text-center jumbotron">
+            <h1 class="display-4">Battle ships</h1>
+            <div class="m-4 container">
+                <p>
+                    Zde můžete
+                    <a class="btn btn-primary" href="/Game/GameSetup">Vytvořit novou hru</a>
+                    nebo
+                    <a class="btn btn-primary" href="/Game/GameList">připojit se ke hře.</a>
+                </p>
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="text-center jumbotron">
+            <h1 class="display-4">Nejdříve je potřeba se prihlásit</h1>
+            <div class="m-4 container">
+                <a class="btn btn-primary text-white" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                <a class="btn btn-primary text-white" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </div>
+        </div>
+    }
 </body>
