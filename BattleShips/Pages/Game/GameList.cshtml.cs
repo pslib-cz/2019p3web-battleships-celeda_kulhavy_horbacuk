@@ -21,11 +21,14 @@ namespace BattleShips
         [BindProperty(SupportsGet = true)]
         public Guid gameId { get; set; }
         public List<Game> Games { get; set; }
+        public List<User> Users { get; set; }
         public List<GameListView> GameLists { get; set; }
         public void OnGet()
         {
             Games = new List<Game>();
-            Games = _management.GetGames(gameId);
+            Games = _management.GetGames();
+            Users = new List<User>();
+            Users = _management.GetUsers();
             //příklad
             var user = this.HttpContext.User
                 .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";

@@ -49,24 +49,14 @@ namespace BattleShips.Services
             throw new NotImplementedException();
         }
 
-        public List<Game> GetGames(Guid? gameId)
-        {
-            IQueryable<Game> games = _db.Games;
-            if (gameId != null)
-            {
-                games = games.Where(i => i.GameId.Equals(gameId));
-            }
-            return games.ToList();
+        public List<Game> GetGames()
+        { 
+            return _db.Games.ToList();
         }
 
-        public List<User> GetUsers(string userId)
+        public List<User> GetUsers()
         {
-            IQueryable<User> users = _db.Users;
-            if (userId != null)
-            {
-                users = users.Where(i => i.Id.Equals(userId));
-            }
-            return users.ToList();
+            return _db.Users.ToList();
         }
 
         public bool RemoveGame(Guid Id)
