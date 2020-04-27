@@ -23,19 +23,21 @@ namespace BattleShips.Services
             throw new NotImplementedException();
         }
 
-        public bool CreateNewGame(string userId, Guid gameId)
+        public bool CreateNewGame(string userId, Guid gameId, int gameSize = 10)
         {
             Guid newGameId = Guid.NewGuid();
-            var game = new Game() { OwnerId = userId, GameId = newGameId };
+            var game = new Game() { OwnerId = userId, GameId = newGameId, GameSize = gameSize };
             _db.Games.Add(game);
             _db.SaveChanges();
             return true;
         }
 
-        public UserGame UserCreateGame(string userId, Guid gameId)
+        public void UserCreateGame(Guid gameId) //TODO navybattlepiece
         {
             Guid guid = Guid.NewGuid();
-            return new UserGame { UserId = userId, GameId = gameId };
+            var usergame = new UserGame { UserId = _identity.LoginId, GameId = guid };
+            _db.UserGames.Add(usergame);
+            _db.SaveChanges();
         }
 
         public User CreateNewUser(string userId, string Name)
