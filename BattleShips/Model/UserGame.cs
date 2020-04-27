@@ -20,8 +20,8 @@ namespace BattleShips.Model
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public ICollection<NavyBattlePiece> NavyBattlePieces { get; set; }
-        public ICollection<ShipUserPlaced> PlacedShips { get; set; }
+        public ICollection<NavyBattlePiece> NavyBattlePieces { get; set; } //gameboard jednoho hrače
+        public ICollection<ShipUserPlaced> ShipsToPlace { get; set; } //Seznam lodi ktery se maji umistit
 
         public PlayerState PlayerState { get; set; }
     }

@@ -16,7 +16,6 @@ namespace BattleShips.Model
         public DbSet<ShipPiece> ShipPieces { get; set; }
         public DbSet<ShipUserPlaced> ShipUsersPlaced { get; set; }
         public DbSet<NavyBattlePiece> NavyBattlePieces { get; set; }
-        public DbSet<GameBoard> GameBoards { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -86,7 +85,7 @@ namespace BattleShips.Model
 
             modelBuilder.Entity<ShipUserPlaced>()
                 .HasOne(su => su.UserGame)
-                .WithMany(u => u.PlacedShips)
+                .WithMany(u => u.ShipsToPlace)
                 .HasForeignKey(su => su.UserGameId)
                 .OnDelete(DeleteBehavior.NoAction);
 
