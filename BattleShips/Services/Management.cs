@@ -23,10 +23,10 @@ namespace BattleShips.Services
             throw new NotImplementedException();
         }
 
-        public bool CreateNewGame(string userId, Guid gameId, int boardSize)
+        public bool CreateNewGame(string userId, Guid gameId)
         {
             Guid newGameId = Guid.NewGuid();
-            var game = new Game() { OwnerId = userId, GameId = newGameId, GameSize = boardSize };
+            var game = new Game() { OwnerId = userId, GameId = newGameId };
             _db.Games.Add(game);
             _db.SaveChanges();
             return true;
@@ -78,6 +78,11 @@ namespace BattleShips.Services
         }
 
         public bool AddGame(Game Game)
+        {
+            throw new NotImplementedException();
+        }
+
+        UserGame IManagement.CreateNewGame(string userId, Guid gameId)
         {
             throw new NotImplementedException();
         }

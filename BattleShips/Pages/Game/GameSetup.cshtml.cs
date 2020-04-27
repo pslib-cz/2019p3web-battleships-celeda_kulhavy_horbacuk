@@ -19,8 +19,7 @@ namespace BattleShips
         [BindProperty]
         public ShipViewModel Ship { get; set; }
         public List<Ship>Ships { get; set; }
-        
-        public int boardSize { get; set; }
+        public Guid gameId { get; set; }
 
         public GameSetupModel(ApplicationDbContext db, ISetup isetup)
         {
@@ -43,7 +42,7 @@ namespace BattleShips
         {
             //Guid gameId = Guid.NewGuid();
             //_isetup.AddShipGame(new ShipGame() { ShipId = Ship.Id, GameId = gameId });
-            //_management.CreateNewGame(new Game() { OwnerId = User.Identity.Name, GameId = gameId, GameSize = boardSize });
+            //_management.UserCreateGame(new UserGame() { UserId = User.Identity.Name, GameId = gameId });
             return RedirectToPage("./ShipPlacement");
         }
     }

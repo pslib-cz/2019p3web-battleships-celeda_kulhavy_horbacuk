@@ -17,7 +17,7 @@ namespace BattleShips.Services
         bool AddGame(Game Game);
         bool AddUser(User user);
         bool RemoveUserFromGame(string userId);
-        bool CreateNewGame(string userId, Guid gameId, int boardSize);
+        UserGame CreateNewGame(string userId, Guid gameId);
         UserGame UserCreateGame(string userId, Guid gameId);
         User CreateNewUser(string userId, string Name);
     }
