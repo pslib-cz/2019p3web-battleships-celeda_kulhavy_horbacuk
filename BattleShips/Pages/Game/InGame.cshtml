@@ -4,5 +4,40 @@
     ViewData["Title"] = "InGame";
 }
 
-<h1>InGame</h1>
+<div class="container">
+    <main role="main" class="pb-3">
+        <header class="game-header">
+            <h1>Hrací plocha</h1>
+        </header>
+        <table class="row justify-content-between">
+            <tbody>
+                @for (var x = 0; x < 10; x++)
+                {
+                    <tr>
+                        @for (var y = 0; y < 10; y++)
+                        {
+                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tbody>
+                @for (var x = 0; x < 10; x++)
+                {
+                    <tr>
+                        @for (var y = 0; y < 10; y++)
+                        {
+                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="info-box mt-2">
+            <p>
+                <a class="btn btn-success" asp-page-handler="Start">Konec umisťování lodí</a>
+            </p>
+        </div>
+    </main>
+</div>
 
