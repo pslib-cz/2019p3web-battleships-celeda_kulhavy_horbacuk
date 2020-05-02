@@ -12,13 +12,9 @@ namespace BattleShips.Services
         //Kulhavý
         List<User> GetUsers();
         List<Game> GetGames();
-        List<Game> GetGameDetails(Guid gameId);
         bool RemoveGame(Guid Id);
-        bool AddGame(Game Game);
-        bool AddUser(User user);
         bool RemoveUserFromGame(string userId);
-        UserGame CreateNewGame(string userId, Guid gameId);
+        bool CreateNewGame(Guid gameId, int gameSite = 10);
         void UserCreateGame(Guid gameId);
-        User CreateNewUser(string userId, string Name);
     }
 }
