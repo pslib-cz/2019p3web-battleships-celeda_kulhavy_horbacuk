@@ -16,16 +16,9 @@ namespace BattleShips.ViewModel
         {
             _navyBattlePieces = navyBattlePieces;
         }
-        public IQueryable<IQueryable<NavyBattlePiece>> GameBoard(IList<NavyBattlePiece> navyBattlePieces)
+        public IEnumerable<IGrouping<int, NavyBattlePiece>> GameBoard(IList<NavyBattlePiece> navyBattlePieces)
         {
-            int Rows = 10;
-            for (int row = 0; row < Rows; row++)
-            {
-                for (int column = 0; column < Rows; column++)
-                { 
-                    
-                }
-            }
+            return navyBattlePieces.OrderBy(n => n.PosY).ThenBy(n => n.PosX).GroupBy(n => n.PosY);
         }
     }
 }
