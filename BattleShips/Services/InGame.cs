@@ -1,9 +1,11 @@
 ﻿using BattleShips.Helpers;
 using BattleShips.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BattleShips.Services
@@ -13,6 +15,7 @@ namespace BattleShips.Services
         private readonly ApplicationDbContext _db;
         private readonly ISession _session;
         private readonly IHttpContextAccessor _http;
+        public Guid CurrentGameId { get; set; }
         public InGame(ApplicationDbContext db, IHttpContextAccessor http)
         {
             _db = db;
@@ -29,34 +32,7 @@ namespace BattleShips.Services
         {
             throw new NotImplementedException();
         }
-        //public string PieceColorManagement(int navyBattlePieceId)
-        //{
-        //    NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
 
-
-
-        //    switch (battlePiece.PieceState)
-        //    {
-        //        case PieceState.Ship:
-        //            return "black";
-        //        case PieceState.DeadShip:
-        //            return "red";
-        //        case PieceState.Water:
-        //            return "";
-
-        //        case PieceState.Margin:
-
-        //        default:
-        //            break;
-        //    }
-
-        //    _db.SaveChanges();
-        //}
-
-        //public void Water()
-        //{ 
-
-        //}
         public Guid LoadGame(string id)
         {
             Guid loadId = _session.Get<Guid>(id);
@@ -69,27 +45,56 @@ namespace BattleShips.Services
             _session.Set(id, guid);
         }
 
-        public void Fire(int navyBattlePieceId)
+        public void Fire(int? navyBattlePieceId)
         {
-            NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
-            PieceState newState;
-            switch(battlePiece.PieceState)
+            if(navyBattlePieceId != null)
             {
-                case PieceState.Ship:
-                    newState = PieceState.DeadShip;
-                    break;
-                case PieceState.Water:
-                    newState = PieceState.DeadWater;
-                    break;
-                case PieceState.Margin:
-                    newState = PieceState.DeadWater;
-                    break;
-                default:
-                    newState = battlePiece.PieceState;
-                    break;
+
+                NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
+
+                Game currentgame = GetCurrentGame();
+                UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurn).AsNoTracking().SingleOrDefault();
+
+                string activeUserId = GetActiveUserId();
+                UserGame ShootersGame = _db.UserGames.Where(u => u.UserId == activeUserId)
+                .Include(u => u.Game)
+                .AsNoTracking().SingleOrDefault();
+
+                if (currentgame.GameState == GameState.End)
+                {
+                    //pro případ palby po konci hry
+                }
+                if (battlePiece.UserGameId == ShootersGame.Id)
+                {
+                    //kontrola střelby na vlastní políčka
+                }
+                if (battlePiece.PieceState == PieceState.DeadShip)
+                {
+                    //již trefená loď (hráč by neměl přijít o kolo, jen dostat upozornění)
+                }
+                if (battlePiece.PieceState == PieceState.DeadWater)
+                {
+                    //již trefená voda (hráč by neměl přijít o kolo, jen dostat upozornění)
+                }
+
+                PieceState newState;
+                switch (battlePiece.PieceState)
+                {
+                    case PieceState.Ship:
+                        newState = PieceState.DeadShip;
+                        break;
+                    case PieceState.Water:
+                        newState = PieceState.DeadWater;
+                        break;
+                    default:
+                        newState = battlePiece.PieceState;
+                        break;
+                }
+                battlePiece.PieceState = newState;
+                _db.SaveChanges();
+                
             }
-            battlePiece.PieceState = newState;
-            _db.SaveChanges();
+
         }
 
         public IList<ShipPiece> Ships()
@@ -100,6 +105,18 @@ namespace BattleShips.Services
         public void Shooting()
         {
             throw new NotImplementedException();
+        }
+
+        public Game GetCurrentGame()
+        {
+            Guid currentGameId = CurrentGameId;
+            return _db.Games.Where(x => x.GameId == currentGameId).AsNoTracking().SingleOrDefault();
+        }
+
+        public string GetActiveUserId()
+        {
+            var output = _http.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return output;
         }
     }
 }

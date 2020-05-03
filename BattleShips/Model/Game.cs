@@ -18,11 +18,11 @@ namespace BattleShips.Model
 
         public string PlayerOnTurnId { get; set; }
         [ForeignKey("PlayerOnTurnId")]
-        public User PlayerOnTurn { get; set; }
+        public string PlayerOnTurn { get; set; }
 
         public string OwnerId { get; set; }
         [ForeignKey("OwnerId")]
-        public User Owner { get; set; }
+        public string Owner { get; set; }
 
         public ICollection<UserGame> UserGames { get; set; }
         public ICollection<ShipGame> ShipsForGame { get; set; }
