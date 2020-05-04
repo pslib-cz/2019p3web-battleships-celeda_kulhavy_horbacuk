@@ -1,0 +1,15 @@
+﻿.board-piece-water {
+    background-color: deepskyblue;
+}
+.board-piece-deadwater {
+    background-color: skyblue;
+}
+.board-piece-ship {
+    background-color: darkblue;
+}
+.board-piece-deadship {
+    background-color: darkred;
+}
+.board-piece-generated {
+    background-color: gray;
+}

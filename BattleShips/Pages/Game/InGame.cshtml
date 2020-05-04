@@ -11,23 +11,24 @@
         </header>
         <table class="row justify-content-between">
             <tbody>
-                @for (var x = 0; x < 10; x++)
+                @foreach (var row in Model.battlePieces)
                 {
                     <tr>
-                        @for (var y = 0; y < 10; y++)
+                        @foreach (var column in row)
                         {
-                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>
+                            @*<td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>*@
                         }
                     </tr>
                 }
             </tbody>
+
             <tbody>
-                @for (var x = 0; x < 10; x++)
+                @foreach (var row in Model.battlePieces)
                 {
                     <tr>
-                        @for (var y = 0; y < 10; y++)
+                        @foreach (var column in row)
                         {
-                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>
+                            @*<td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>*@
                         }
                     </tr>
                 }
