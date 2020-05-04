@@ -10,13 +10,13 @@
             <h1>Hrací plocha</h1>
         </header>
         <table class="row justify-content-between">
-            <tbody>
+            @*<tbody>
                 @foreach (var row in Model.battlePieces)
                 {
                     <tr>
                         @foreach (var column in row)
                         {
-                            @*<td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>*@
+                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>
                         }
                     </tr>
                 }
@@ -28,11 +28,11 @@
                     <tr>
                         @foreach (var column in row)
                         {
-                            @*<td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>*@
+                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)" style="background-color:@Model.Color"><button asp-page-handler="AddShip" class="btn"></button></td>
                         }
                     </tr>
                 }
-            </tbody>
+            </tbody>*@
         </table>
     </main>
 </div>

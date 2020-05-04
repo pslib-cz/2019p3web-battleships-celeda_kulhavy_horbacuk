@@ -29,7 +29,7 @@ namespace BattleShips
         }
         public void OnGet()
         {
-            battlePieces = _gbm.GameBoard(navyBattlePieces);
+            //battlePieces = _gbm.GameBoard(navyBattlePieces);
         }
         public void OnGetAddShip()
         {

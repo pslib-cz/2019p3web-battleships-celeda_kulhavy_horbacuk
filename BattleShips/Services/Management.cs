@@ -10,7 +10,6 @@ namespace BattleShips.Services
     {
         public ApplicationDbContext _db;
         public Identity _identity;
-
         public Management(ApplicationDbContext db, Identity identity)
         {
             _db = db;

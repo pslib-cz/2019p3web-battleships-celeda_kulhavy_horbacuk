@@ -16,6 +16,7 @@ namespace BattleShips.Model
         public DbSet<ShipPiece> ShipPieces { get; set; }
         public DbSet<ShipUserPlaced> ShipUsersPlaced { get; set; }
         public DbSet<NavyBattlePiece> NavyBattlePieces { get; set; }
+        public DbSet<User> IdentityUsers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
