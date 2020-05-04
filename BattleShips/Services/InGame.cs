@@ -97,6 +97,12 @@ namespace BattleShips.Services
 
         }
 
+        public List<NavyBattlePiece> GetNavyBattlePieces(int userGameId)
+        {
+            var pieces = _db.NavyBattlePieces.Where(g => g.UserGameId == userGameId).ToList();
+            return pieces;
+        }
+
         public IList<ShipPiece> Ships()
         {
             throw new NotImplementedException();
