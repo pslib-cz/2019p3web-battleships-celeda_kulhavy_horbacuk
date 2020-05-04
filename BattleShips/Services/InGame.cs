@@ -53,7 +53,7 @@ namespace BattleShips.Services
                 NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
 
                 Game currentgame = GetCurrentGame();
-                //UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurn).AsNoTracking().SingleOrDefault();
+                UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurn.ToString()).AsNoTracking().SingleOrDefault();
 
                 string activeUserId = GetActiveUserId();
                 UserGame ShootersGame = _db.UserGames.Where(u => u.UserId == activeUserId)
