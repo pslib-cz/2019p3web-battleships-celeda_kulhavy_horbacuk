@@ -124,5 +124,10 @@ namespace BattleShips.Services
             var output = _http.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             return output;
         }
+        public IList<UserGame> GetUserGames()
+        {
+            Guid gameId = CurrentGameId;
+            return _db.UserGames.Where(g => g.GameId == CurrentGameId).Include(u => u.User).Include(g => g.Game).ToList();
+        }
     }
 }

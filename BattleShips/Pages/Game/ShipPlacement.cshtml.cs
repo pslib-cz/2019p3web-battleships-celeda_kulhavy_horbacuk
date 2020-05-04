@@ -14,22 +14,28 @@ namespace BattleShips
     public class ShipPlacementModel : PageModel
     {
         public ISetup _isetup;
-        public string Color { get; set; }
+        public IGame _igame;
+
         public GameBoardModel _gbm;
         public DbSet<Game> Games;
         public ApplicationDbContext _db;
 
-        public IEnumerable<IGrouping<int, NavyBattlePiece>> battlePieces;
+        public IList<UserGame> UserGames { get; set; }
+        public IList<GameBoardModel> GameBoardModels { get; set; } = new List<GameBoardModel>();
+
         public ShipPlacementModel(ISetup isetup, ApplicationDbContext db, GameBoardModel gbm)
         {
             _gbm = gbm;
             _isetup = isetup;
             _db = db;
-            Color = "deepskyblue"; // asi tu ma byt spiš nějaky foreach ktery projde každy poličko (navybattlepiece) a vzhledem k hodnotě vlastnosti PieceState kdaždemu poličku se načte barva
+            //Color = "deepskyblue"; // asi tu ma byt spiš nějaky foreach ktery projde každy poličko (navybattlepiece) a vzhledem k hodnotě vlastnosti PieceState kdaždemu poličku se načte barva
         }
         public void OnGet()
         {
-            //battlePieces = _gbm.GameBoard(navyBattlePieces);
+            UserGames = _igame.GetUserGames();
+            IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(/*UserGames.Id*/);
+            GameBoardModel gameBoard = new GameBoardModel(navyBattlePieces);
+            GameBoardModels.Add(gameBoard);
         }
         public void OnGetAddShip()
         {

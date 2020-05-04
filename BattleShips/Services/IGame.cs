@@ -15,5 +15,9 @@ namespace BattleShips.Services
         public void Fire(int? navyBattlePieceId);
         public Guid LoadGame(string id);
         public void SaveGame(string id, Guid guid);
+        List<NavyBattlePiece> GetNavyBattlePieces(int userGameId);
+        public string GetActiveUserId();
+        public Game GetCurrentGame();
+        IList<UserGame> GetUserGames();
     }
 }
