@@ -16,10 +16,10 @@ namespace BattleShips.Services
             _identity = identity;
         }
 
-        public bool CreateNewGame(Guid gameId, int gameSize = 10)
+        public bool CreateNewGame(Guid gameId)
         {
             Guid newGameId = Guid.NewGuid();
-            var game = new Game() { OwnerId = _identity.LoginId, GameId = newGameId, GameSize = gameSize };
+            var game = new Game() { OwnerId = _identity.LoginId, GameId = newGameId};
             _db.Games.Add(game);
             _db.SaveChanges();
             return true;

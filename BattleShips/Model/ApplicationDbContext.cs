@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,91 @@ namespace BattleShips.Model
             modelBuilder.Entity<Ship>().HasData(new Ship { Id = 3, Name = "Křižník" });
             modelBuilder.Entity<Ship>().HasData(new Ship { Id = 4, Name = "Bitevní loď" });
             modelBuilder.Entity<Ship>().HasData(new Ship { Id = 5, Name = "Letadlová loď" });
+            var hasher = new PasswordHasher<User>();
 
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = "TOMAS123",
+                UserName = "tomas.kulhavy@pslib.cz",
+                NormalizedUserName = "TOMAS.KULHAVY@PSLIB.CZ",
+                Email = "tomas.kulhavy@pslib.cz",
+                NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = string.Empty,
+                PasswordHash = hasher.HashPassword(null, "Admin.1234")
+            });
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = "MARTIN123",
+                UserName = "martin.celeda@pslib.cz",
+                NormalizedUserName = "MARTIN.CELEDA@PSLIB.CZ",
+                Email = "martin.celeda@pslib.cz",
+                NormalizedEmail = "MARTIN.CELEDA@PSLIB.CZ",
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = string.Empty,
+                PasswordHash = hasher.HashPassword(null, "Admin.1234")
+            });
+
+            Game firstGame = new Game
+            {
+                GameId = new Guid("23e8e6dc-11f3-4899-b977-445bd8cfbcb1"),
+                MaxPlayers = 2,
+                OwnerId = "TOMAS123",
+                PlayerOnTurnId = "MARTIN123",
+                GameState = GameState.Setup
+            };
+
+            Game secondGame = new Game
+            {
+                GameId = new Guid("ee7c70ca-357b-4874-8cd9-81c1fc39977f"),
+                MaxPlayers = 2,
+                OwnerId = "MARTIN123",
+                PlayerOnTurnId = "TOMAS123",
+                GameState = GameState.Setup
+            };
+
+            modelBuilder.Entity<Game>().HasData(firstGame);
+            modelBuilder.Entity<Game>().HasData(secondGame);
+
+            UserGame userGameTomas = new UserGame
+            {
+                Id = 1,
+                GameId = firstGame.GameId,
+                UserId = "TOMAS123",
+                PlayerState = PlayerState.PlacingShip
+            };
+
+            UserGame userGameMartin = new UserGame
+            {
+                Id = 2,
+                GameId = firstGame.GameId,
+                UserId = "MARTIN123",
+                PlayerState = PlayerState.PlacingShip
+            };
+
+            UserGame userGameFirst = new UserGame
+            {
+                Id = 3,
+                GameId = secondGame.GameId,
+                UserId = "TOMAS123",
+                PlayerState = PlayerState.PlacingShip
+            };
+
+            UserGame userGameSecond = new UserGame
+            {
+                Id = 4,
+                GameId = secondGame.GameId,
+                UserId = "MARTIN123",
+                PlayerState = PlayerState.PlacingShip
+            };
+
+            modelBuilder.Entity<UserGame>().HasData(userGameTomas);
+            modelBuilder.Entity<UserGame>().HasData(userGameMartin);
+            modelBuilder.Entity<UserGame>().HasData(userGameFirst);
+            modelBuilder.Entity<UserGame>().HasData(userGameSecond);
 
             modelBuilder.Entity<Game>()
                 .HasOne(g => g.PlayerOnTurn)

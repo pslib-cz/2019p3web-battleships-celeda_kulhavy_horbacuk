@@ -46,8 +46,10 @@ namespace BattleShips
             services.AddTransient<ISetup, Setup>();
             services.AddTransient<IGame, InGame>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
-            services.AddScoped<SessionStorage<Guid>>();
+            //services.AddScoped<SessionStorage<Guid>>();
             services.AddRazorPages();
         }
 
@@ -67,7 +69,7 @@ namespace BattleShips
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseSession();
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

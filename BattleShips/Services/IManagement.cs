@@ -14,7 +14,7 @@ namespace BattleShips.Services
         List<Game> GetGames();
         bool RemoveGame(Guid Id);
         bool RemoveUserFromGame(string userId);
-        bool CreateNewGame(Guid gameId, int gameSite = 10);
+        bool CreateNewGame(Guid gameId);
         void UserCreateGame(Guid gameId);
     }
 }

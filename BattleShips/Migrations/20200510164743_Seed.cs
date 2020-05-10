@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BattleShips.Migrations
 {
-    public partial class Migrace : Migration
+    public partial class Seed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -158,7 +158,6 @@ namespace BattleShips.Migrations
                 {
                     GameId = table.Column<Guid>(nullable: false),
                     MaxPlayers = table.Column<int>(nullable: false),
-                    GameSize = table.Column<int>(nullable: false),
                     PlayerOnTurnId = table.Column<string>(nullable: true),
                     OwnerId = table.Column<string>(nullable: true),
                     GameState = table.Column<int>(nullable: false)
@@ -179,31 +178,108 @@ namespace BattleShips.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserGames",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    GameId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    PlayerState = table.Column<int>(nullable: false),
+                    ShipId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserGames", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserGames_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "GameId");
+                    table.ForeignKey(
+                        name: "FK_UserGames_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShipGames",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ShipId = table.Column<int>(nullable: false),
+                    GameId = table.Column<Guid>(nullable: false),
+                    UserGameId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShipGames", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShipGames_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "GameId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NavyBattlePieces",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PosX = table.Column<int>(nullable: false),
+                    PosY = table.Column<int>(nullable: false),
+                    UserGameId = table.Column<int>(nullable: false),
+                    ShipId = table.Column<int>(nullable: false),
+                    Hidden = table.Column<bool>(nullable: false),
+                    PieceState = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NavyBattlePieces", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NavyBattlePieces_UserGames_UserGameId",
+                        column: x => x.UserGameId,
+                        principalTable: "UserGames",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShipPieces",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PosX = table.Column<int>(nullable: false),
+                    PosY = table.Column<int>(nullable: false),
+                    IsMargin = table.Column<bool>(nullable: false),
+                    ShipId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShipPieces", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShipUsersPlaced",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ShipId = table.Column<int>(nullable: false),
-                    UserGameId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    UserId1 = table.Column<string>(nullable: true)
+                    UserGameId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShipUsersPlaced", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShipUsersPlaced_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ShipUsersPlaced_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_ShipUsersPlaced_UserGames_UserGameId",
+                        column: x => x.UserGameId,
+                        principalTable: "UserGames",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -227,114 +303,15 @@ namespace BattleShips.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ShipGames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ShipId = table.Column<int>(nullable: false),
-                    GameId = table.Column<Guid>(nullable: false),
-                    UserGameId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShipGames", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ShipGames_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId");
-                    table.ForeignKey(
-                        name: "FK_ShipGames_Ships_ShipId",
-                        column: x => x.ShipId,
-                        principalTable: "Ships",
-                        principalColumn: "Id");
-                });
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "TOMAS123", 0, "fe116012-5abb-4868-95ff-e6f61f0482fc", "tomas.kulhavy@pslib.cz", true, false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMAS.KULHAVY@PSLIB.CZ", "AQAAAAEAACcQAAAAEKDMiVd1aVtcmOfXuCsrgbaY9Hsi2vRYDu+KtcIVO+meC2xaQtfUpBPHCWWb7rA3ug==", null, false, "", false, "tomas.kulhavy@pslib.cz" });
 
-            migrationBuilder.CreateTable(
-                name: "ShipPieces",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PosX = table.Column<int>(nullable: false),
-                    PosY = table.Column<int>(nullable: false),
-                    IsMargin = table.Column<bool>(nullable: false),
-                    ShipId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShipPieces", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ShipPieces_Ships_ShipId",
-                        column: x => x.ShipId,
-                        principalTable: "Ships",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserGames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    GameId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    PlayerState = table.Column<int>(nullable: false),
-                    ShipId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserGames", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserGames_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId");
-                    table.ForeignKey(
-                        name: "FK_UserGames_Ships_ShipId",
-                        column: x => x.ShipId,
-                        principalTable: "Ships",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserGames_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NavyBattlePieces",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PosX = table.Column<int>(nullable: false),
-                    PosY = table.Column<int>(nullable: false),
-                    UserGameId = table.Column<int>(nullable: false),
-                    ShipId = table.Column<int>(nullable: false),
-                    Hidden = table.Column<bool>(nullable: false),
-                    PieceState = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NavyBattlePieces", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_NavyBattlePieces_Ships_ShipId",
-                        column: x => x.ShipId,
-                        principalTable: "Ships",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_NavyBattlePieces_UserGames_UserGameId",
-                        column: x => x.UserGameId,
-                        principalTable: "UserGames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "MARTIN123", 0, "fd198e39-0232-452d-abd9-1050fa883d15", "martin.celeda@pslib.cz", true, false, null, "MARTIN.CELEDA@PSLIB.CZ", "MARTIN.CELEDA@PSLIB.CZ", "AQAAAAEAACcQAAAAEPAjw4oXPJGQIhuFB94TjoKZTfHAuJAOU30nHcqbTT3r7jvM0QWSHK963kohbb2rIQ==", null, false, "", false, "martin.celeda@pslib.cz" });
 
             migrationBuilder.InsertData(
                 table: "Ships",
@@ -360,6 +337,36 @@ namespace BattleShips.Migrations
                 table: "Ships",
                 columns: new[] { "Id", "Count", "Name", "ShipUserPlacedId" },
                 values: new object[] { 5, 0, "Letadlová loď", null });
+
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "GameId", "GameState", "MaxPlayers", "OwnerId", "PlayerOnTurnId" },
+                values: new object[] { new Guid("23e8e6dc-11f3-4899-b977-445bd8cfbcb1"), 0, 2, "TOMAS123", "MARTIN123" });
+
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "GameId", "GameState", "MaxPlayers", "OwnerId", "PlayerOnTurnId" },
+                values: new object[] { new Guid("ee7c70ca-357b-4874-8cd9-81c1fc39977f"), 0, 2, "MARTIN123", "TOMAS123" });
+
+            migrationBuilder.InsertData(
+                table: "UserGames",
+                columns: new[] { "Id", "GameId", "PlayerState", "ShipId", "UserId" },
+                values: new object[] { 1, new Guid("23e8e6dc-11f3-4899-b977-445bd8cfbcb1"), 0, null, "TOMAS123" });
+
+            migrationBuilder.InsertData(
+                table: "UserGames",
+                columns: new[] { "Id", "GameId", "PlayerState", "ShipId", "UserId" },
+                values: new object[] { 2, new Guid("23e8e6dc-11f3-4899-b977-445bd8cfbcb1"), 0, null, "MARTIN123" });
+
+            migrationBuilder.InsertData(
+                table: "UserGames",
+                columns: new[] { "Id", "GameId", "PlayerState", "ShipId", "UserId" },
+                values: new object[] { 3, new Guid("ee7c70ca-357b-4874-8cd9-81c1fc39977f"), 0, null, "TOMAS123" });
+
+            migrationBuilder.InsertData(
+                table: "UserGames",
+                columns: new[] { "Id", "GameId", "PlayerState", "ShipId", "UserId" },
+                values: new object[] { 4, new Guid("ee7c70ca-357b-4874-8cd9-81c1fc39977f"), 0, null, "MARTIN123" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -449,16 +456,6 @@ namespace BattleShips.Migrations
                 column: "UserGameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShipUsersPlaced_UserId",
-                table: "ShipUsersPlaced",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShipUsersPlaced_UserId1",
-                table: "ShipUsersPlaced",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserGames_GameId",
                 table: "UserGames",
                 column: "GameId");
@@ -474,17 +471,41 @@ namespace BattleShips.Migrations
                 column: "UserId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ShipUsersPlaced_Ships_ShipId",
-                table: "ShipUsersPlaced",
+                name: "FK_UserGames_Ships_ShipId",
+                table: "UserGames",
+                column: "ShipId",
+                principalTable: "Ships",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ShipGames_Ships_ShipId",
+                table: "ShipGames",
                 column: "ShipId",
                 principalTable: "Ships",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ShipUsersPlaced_UserGames_UserGameId",
+                name: "FK_NavyBattlePieces_Ships_ShipId",
+                table: "NavyBattlePieces",
+                column: "ShipId",
+                principalTable: "Ships",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ShipPieces_Ships_ShipId",
+                table: "ShipPieces",
+                column: "ShipId",
+                principalTable: "Ships",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ShipUsersPlaced_Ships_ShipId",
                 table: "ShipUsersPlaced",
-                column: "UserGameId",
-                principalTable: "UserGames",
+                column: "ShipId",
+                principalTable: "Ships",
                 principalColumn: "Id");
         }
 
@@ -497,14 +518,6 @@ namespace BattleShips.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Games_AspNetUsers_PlayerOnTurnId",
                 table: "Games");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ShipUsersPlaced_AspNetUsers_UserId",
-                table: "ShipUsersPlaced");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ShipUsersPlaced_AspNetUsers_UserId1",
-                table: "ShipUsersPlaced");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_UserGames_AspNetUsers_UserId",

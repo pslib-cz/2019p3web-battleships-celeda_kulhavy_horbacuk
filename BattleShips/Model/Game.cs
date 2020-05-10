@@ -14,7 +14,6 @@ namespace BattleShips.Model
         public Guid GameId { get; set; }
 
         public int MaxPlayers { get; set; }
-        public int GameSize { get; set; }
 
         public string PlayerOnTurnId { get; set; }
         [ForeignKey("PlayerOnTurnId")]

@@ -21,6 +21,7 @@ namespace BattleShips.Services
             _db = db;
             _http = http;
             _session = http.HttpContext.Session;
+            CurrentGameId = LoadGame("Game");
         }
 
         public void BoxCheck()
@@ -36,7 +37,7 @@ namespace BattleShips.Services
         public Guid LoadGame(string id)
         {
             Guid loadId = _session.Get<Guid>(id);
-            loadId = (Guid)Activator.CreateInstance(typeof(Guid));
+            //loadId = (Guid)Activator.CreateInstance(typeof(Guid));
             return loadId;
         }
 

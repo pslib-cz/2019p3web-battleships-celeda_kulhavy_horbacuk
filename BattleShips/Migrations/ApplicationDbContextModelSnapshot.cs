@@ -22,9 +22,6 @@ namespace BattleShips.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("GameSize")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("GameState")
                         .HasColumnType("INTEGER");
 
@@ -44,26 +41,30 @@ namespace BattleShips.Migrations
                     b.HasIndex("PlayerOnTurnId");
 
                     b.ToTable("Games");
-                });
 
-            modelBuilder.Entity("BattleShips.Model.GameBoard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GameBoards");
+                    b.HasData(
+                        new
+                        {
+                            GameId = new Guid("23e8e6dc-11f3-4899-b977-445bd8cfbcb1"),
+                            GameState = 0,
+                            MaxPlayers = 2,
+                            OwnerId = "TOMAS123",
+                            PlayerOnTurnId = "MARTIN123"
+                        },
+                        new
+                        {
+                            GameId = new Guid("ee7c70ca-357b-4874-8cd9-81c1fc39977f"),
+                            GameState = 0,
+                            MaxPlayers = 2,
+                            OwnerId = "MARTIN123",
+                            PlayerOnTurnId = "TOMAS123"
+                        });
                 });
 
             modelBuilder.Entity("BattleShips.Model.NavyBattlePiece", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("GameBoardId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("Hidden")
@@ -85,8 +86,6 @@ namespace BattleShips.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameBoardId");
 
                     b.HasIndex("ShipId");
 
@@ -210,21 +209,11 @@ namespace BattleShips.Migrations
                     b.Property<int>("UserGameId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ShipId");
 
                     b.HasIndex("UserGameId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("ShipUsersPlaced");
                 });
@@ -291,6 +280,40 @@ namespace BattleShips.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "TOMAS123",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "fe116012-5abb-4868-95ff-e6f61f0482fc",
+                            Email = "tomas.kulhavy@pslib.cz",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
+                            NormalizedUserName = "TOMAS.KULHAVY@PSLIB.CZ",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKDMiVd1aVtcmOfXuCsrgbaY9Hsi2vRYDu+KtcIVO+meC2xaQtfUpBPHCWWb7rA3ug==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "tomas.kulhavy@pslib.cz"
+                        },
+                        new
+                        {
+                            Id = "MARTIN123",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "fd198e39-0232-452d-abd9-1050fa883d15",
+                            Email = "martin.celeda@pslib.cz",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MARTIN.CELEDA@PSLIB.CZ",
+                            NormalizedUserName = "MARTIN.CELEDA@PSLIB.CZ",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPAjw4oXPJGQIhuFB94TjoKZTfHAuJAOU30nHcqbTT3r7jvM0QWSHK963kohbb2rIQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "martin.celeda@pslib.cz"
+                        });
                 });
 
             modelBuilder.Entity("BattleShips.Model.UserGame", b =>
@@ -320,6 +343,36 @@ namespace BattleShips.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserGames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            GameId = new Guid("23e8e6dc-11f3-4899-b977-445bd8cfbcb1"),
+                            PlayerState = 0,
+                            UserId = "TOMAS123"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            GameId = new Guid("23e8e6dc-11f3-4899-b977-445bd8cfbcb1"),
+                            PlayerState = 0,
+                            UserId = "MARTIN123"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            GameId = new Guid("ee7c70ca-357b-4874-8cd9-81c1fc39977f"),
+                            PlayerState = 0,
+                            UserId = "TOMAS123"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            GameId = new Guid("ee7c70ca-357b-4874-8cd9-81c1fc39977f"),
+                            PlayerState = 0,
+                            UserId = "MARTIN123"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -469,10 +522,6 @@ namespace BattleShips.Migrations
 
             modelBuilder.Entity("BattleShips.Model.NavyBattlePiece", b =>
                 {
-                    b.HasOne("BattleShips.Model.GameBoard", null)
-                        .WithMany("Board")
-                        .HasForeignKey("GameBoardId");
-
                     b.HasOne("BattleShips.Model.Ship", "Ship")
                         .WithMany("NavyBattlePieces")
                         .HasForeignKey("ShipId")
@@ -526,18 +575,10 @@ namespace BattleShips.Migrations
                         .IsRequired();
 
                     b.HasOne("BattleShips.Model.UserGame", "UserGame")
-                        .WithMany("PlacedShips")
+                        .WithMany("ShipsToPlace")
                         .HasForeignKey("UserGameId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("BattleShips.Model.User", null)
-                        .WithMany("PlacedShips")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("BattleShips.Model.User", null)
-                        .WithMany("Ships")
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("BattleShips.Model.UserGame", b =>
