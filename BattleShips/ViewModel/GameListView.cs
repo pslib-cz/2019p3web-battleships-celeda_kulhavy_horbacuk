@@ -8,6 +8,8 @@ namespace BattleShips.ViewModel
 {
     public class GameListView
     {
+        [Display(Name = "Id")]
+        public int Id { get; set; }
         [Display(Name = "Vytvořeno")]
         public string GameCreatedAt { get; set; }
         [Display(Name = "Stav hry")]

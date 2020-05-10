@@ -7,15 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BattleShips.ViewModel;
 using BattleShips.Model;
 using BattleShips.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BattleShips
 {
+    [Authorize]
     public class GameListModel : PageModel
     {
         IManagement _management;
-        public GameListModel(IManagement management)
+        IGame _game;
+        public GameListModel(IManagement management, IGame game)
         {
             _management = management;
+            _game = game;
             GameLists = new List<GameListView>();
         }
         [BindProperty(SupportsGet = true)]
@@ -29,11 +33,16 @@ namespace BattleShips
             Games = _management.GetGames();
             Users = new List<User>();
             Users = _management.GetUsers();
-            //příklad
-            var user = this.HttpContext.User
-                .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";
-            var user2 = this.HttpContext.User
-                .FindFirst(System.Security.Claims.ClaimTypes.Anonymous)?.Value ?? "";
+        }
+        public IActionResult OnPostJoinGameOnPlacement(Guid id)
+        {
+            _game.SaveGame("Game", id);
+            return RedirectToPage("./ShipPlacement");
+        }
+        public IActionResult OnStartGame(Guid id)
+        {
+            _game.SaveGame("Game", id);
+            return RedirectToPage("./InGame");
         }
     }
 }

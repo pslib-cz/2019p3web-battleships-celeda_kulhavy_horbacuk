@@ -10,8 +10,8 @@
             <h1>Hrací plocha</h1>
         </header>
         <table class="row justify-content-between">
-            @*<tbody>
-                @foreach (var row in Model.battlePieces)
+            <tbody>
+                @foreach (var row in Model.GameBoardModels)
                 {
                     <tr>
                         @foreach (var column in row)
@@ -32,7 +32,7 @@
                         }
                     </tr>
                 }
-            </tbody>*@
+            </tbody>
         </table>
     </main>
 </div>
