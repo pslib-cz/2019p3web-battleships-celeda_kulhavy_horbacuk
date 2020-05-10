@@ -10,32 +10,7 @@
             <h1>Hrací plocha</h1>
         </header>
 
-        <partial name="gameBoard" model="Model.GameBoardModels" />
-        @*<table class="row justify-content-between">
-            <tbody>
-                @foreach (var row in Model.GameBoardModels)
-                {
-                    <tr>
-                        @foreach (var column in row._navyBattlePieces)
-                        {
-                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@column; @row)"><button asp-page-handler="AddShip" class="btn"></button></td>
-                        }
-                    </tr>
-                }
-            </tbody>
-
-            <tbody>
-                @foreach (var row in Model.GameBoardModels)
-                {
-                    <tr>
-                        @foreach (var column in row._navyBattlePieces)
-                        {
-                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@column; @row)"><button asp-page-handler="AddShip" class="btn"></button></td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>*@
+        <partial name="_GameBoard" model="Model.GameBoardModels" />
     </main>
 </div>
 

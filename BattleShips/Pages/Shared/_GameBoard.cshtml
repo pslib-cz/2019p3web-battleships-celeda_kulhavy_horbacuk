@@ -1,29 +1,23 @@
-﻿@using ViewModel
-@model GameBoardModel
+﻿@model ViewModel.GameBoardModel
+@using Services
+
+@{
+    IEnumerable<IEnumerable<BattleShips.Model.NavyBattlePiece>> board = Model.GameBoard(Model._navyBattlePieces);
+}
 
 <table class="row justify-content-between">
     <tbody>
-        @foreach (var row in Model.)
+        @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
         {
             <tr>
-                @foreach (var column in row._navyBattlePieces)
+                @foreach (Model.NavyBattlePiece navyBattlePiece in row)
                 {
-                    <td class="border" data-placement="top" data-toggle="tooltip" title="(@column; @row)"><button asp-page-handler="AddShip" class="btn"></button></td>
-                }
-            </tr>
-        }
-    </tbody>
-
-    <tbody>
-        @foreach (var row in Model.GameBoardModels)
-        {
-            <tr>
-                @foreach (var column in row._navyBattlePieces)
-                {
-                    <td class="border" data-placement="top" data-toggle="tooltip" title="(@column; @row)"><button asp-page-handler="AddShip" class="btn"></button></td>
+                    <td class="border" data-placement="top" data-toggle="tooltip">
+                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
+                    </td>
                 }
             </tr>
         }
     </tbody>
 </table>
-
+<p class="text-primary">@Model.UserGame.User.UserName</p>
