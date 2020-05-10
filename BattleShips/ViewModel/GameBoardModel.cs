@@ -10,9 +10,9 @@ namespace BattleShips.ViewModel
     {
         public Game Game { get; set; }
         public UserGame UserGame { get; set; }
-        public List<NavyBattlePiece> _navyBattlePieces { get; set; }
+        public IList<NavyBattlePiece> _navyBattlePieces { get; set; }
 
-        public GameBoardModel(List<NavyBattlePiece> navyBattlePieces)
+        public GameBoardModel(IList<NavyBattlePiece> navyBattlePieces, UserGame userGame)
         {
             _navyBattlePieces = navyBattlePieces;
         }
