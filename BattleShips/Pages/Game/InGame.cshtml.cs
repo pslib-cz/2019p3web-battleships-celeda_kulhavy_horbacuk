@@ -16,7 +16,7 @@ namespace BattleShips.Pages.Game
         public ISetup _isetup;
         public IGame _igame;
 
-        public DbSet<Model.Game> Games;
+        public Model.Game Games;
         public ApplicationDbContext _db;
 
         public IList<UserGame> UserGames { get; set; }
@@ -30,6 +30,7 @@ namespace BattleShips.Pages.Game
 
         public void OnGet()
         {
+            Games = _igame.GetCurrentGame();
             UserGames = _igame.GetUserGames();
             for (int board = 0; board < UserGames.Count(); board++)
             {

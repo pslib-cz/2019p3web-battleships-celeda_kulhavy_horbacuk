@@ -10,7 +10,10 @@
             <h1>Hrací plocha</h1>
         </header>
 
-        <partial name="_GameBoard" model="Model.GameBoardModels" />
+        @foreach (BattleShips.ViewModel.GameBoardModel gameBoard in Model.GameBoardModels)
+        {
+            <partial name="_GameBoard" model="gameBoard" />
+        }
     </main>
 </div>
 

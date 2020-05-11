@@ -117,7 +117,7 @@ namespace BattleShips.Services
         public Game GetCurrentGame()
         {
             Guid currentGameId = CurrentGameId;
-            return _db.Games.Where(x => x.GameId == currentGameId).AsNoTracking().SingleOrDefault();
+            return _db.Games.Where(x => x.GameId == currentGameId).Include(u => u.UserGames).ThenInclude(u => u.User).AsNoTracking().SingleOrDefault();
         }
 
         public string GetActiveUserId()
