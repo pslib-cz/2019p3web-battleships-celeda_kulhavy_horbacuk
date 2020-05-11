@@ -16,19 +16,28 @@ namespace BattleShips
         public ISetup _isetup;
         public IGame _igame;
 
-        public DbSet<Game> Games;
+        public Game Games;
         public ApplicationDbContext _db;
 
         public IList<UserGame> UserGames { get; set; }
+        public IList<GameBoardModel> GameBoardModels { get; set; } = new List<GameBoardModel>();
 
-        public ShipPlacementModel(ISetup isetup, ApplicationDbContext db)
+        public ShipPlacementModel(ISetup isetup, ApplicationDbContext db, IGame igame)
         {
             _isetup = isetup;
             _db = db;
+            _igame = igame;
         }
         public void OnGet()
         {
-            
+            Games = _igame.GetCurrentGame();
+            UserGames = _igame.GetUserGames();
+            for (int board = 0; board < UserGames.Count(); board++)
+            {
+                IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(UserGames[board].Id);
+                GameBoardModel newBoard = new GameBoardModel(navyBattlePieces, UserGames[board]);
+                GameBoardModels.Add(newBoard);
+            }
         }
         public void OnGetAddShip()
         {

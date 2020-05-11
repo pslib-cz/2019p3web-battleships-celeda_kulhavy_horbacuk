@@ -15,13 +15,15 @@ namespace BattleShips.Services
         private readonly ApplicationDbContext _db;
         private readonly ISession _session;
         private readonly IHttpContextAccessor _http;
+        private string _user;
         public Guid CurrentGameId { get; set; }
-        public InGame(ApplicationDbContext db, IHttpContextAccessor http)
+        public InGame(ApplicationDbContext db, IHttpContextAccessor http, Identity identity)
         {
             _db = db;
             _http = http;
             _session = http.HttpContext.Session;
             CurrentGameId = LoadGame("Game");
+            _user = identity.LoginId;
         }
 
         public void BoxCheck()
@@ -129,6 +131,40 @@ namespace BattleShips.Services
         {
             Guid gameId = CurrentGameId;
             return _db.UserGames.Where(g => g.GameId == CurrentGameId).Include(u => u.User).Include(g => g.Game).ToList();
+        }
+        public void CreateBattleField(UserGame userGame)
+        {
+            var game = _db.Games.SingleOrDefault(x => x.GameId == userGame.GameId);
+
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    _db.NavyBattlePieces.Add(new NavyBattlePiece { UserGame = userGame, ShipId = 1, PosX = x, PosY = y, Hidden = true });
+                }
+            }
+            _db.SaveChanges();
+        }
+        public void StartGame()
+        {
+            Game game = new Game
+            {
+                GameId = Guid.NewGuid(),
+                MaxPlayers = 2,
+                OwnerId = _user,
+                PlayerOnTurnId = _user,
+                GameState = GameState.Setup
+            };
+            UserGame userGame = new UserGame
+            {
+                GameId = game.GameId,
+                UserId = _user,
+            };
+            SaveGame("Game", game.GameId);
+            _db.Games.Add(game);
+            _db.UserGames.Add(userGame);
+            CreateBattleField(userGame);
+            _db.SaveChanges();
         }
     }
 }

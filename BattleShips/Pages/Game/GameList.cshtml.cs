@@ -27,12 +27,19 @@ namespace BattleShips
         public List<Game> Games { get; set; }
         public List<User> Users { get; set; }
         public List<GameListView> GameLists { get; set; }
+        public string UserId { get; set; }
         public void OnGet()
         {
             Games = new List<Game>();
             Games = _management.GetGames();
             Users = new List<User>();
             Users = _management.GetUsers();
+            UserId = _game.GetActiveUserId();
+        }
+        public IActionResult OnGetRemove(Guid id)
+        {
+            _management.RemoveGame(id);
+            return RedirectToPage("./GameList");
         }
         public IActionResult OnPostJoinGameOnPlacement(Guid id)
         {

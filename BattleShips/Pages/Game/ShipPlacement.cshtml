@@ -9,19 +9,10 @@
         <header class="game-header">
             <h1>Umístění lodí</h1>
         </header>
-        <table>
-            <tbody>
-                @for (var x = 0; x < 10; x++)
-                {
-                    <tr>
-                        @for (var y = 0; y < 10; y++)
-                        {
-                            <td class="border" data-placement="top" data-toggle="tooltip" title="(@x; @y)"><button asp-page-handler="AddShip" class="btn"></button></td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @foreach (BattleShips.ViewModel.GameBoardModel gameBoard in Model.GameBoardModels)
+        {
+            <partial name="_GameBoard" model="gameBoard" />
+        }
 
         <div class="info-box mt-2">
             <p>

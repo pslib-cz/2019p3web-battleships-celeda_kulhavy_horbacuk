@@ -19,5 +19,7 @@ namespace BattleShips.Services
         public string GetActiveUserId();
         public Game GetCurrentGame();
         IList<UserGame> GetUserGames();
+        void StartGame();
+        void CreateBattleField(UserGame userGame);
     }
 }

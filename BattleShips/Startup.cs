@@ -42,9 +42,9 @@ namespace BattleShips
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<Identity>();
-            services.AddTransient<IManagement, Management>();
-            services.AddTransient<ISetup, Setup>();
-            services.AddTransient<IGame, InGame>();
+            services.AddScoped<IManagement, Management>();
+            services.AddScoped<ISetup, Setup>();
+            services.AddScoped<IGame, InGame>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDistributedMemoryCache();
             services.AddSession();

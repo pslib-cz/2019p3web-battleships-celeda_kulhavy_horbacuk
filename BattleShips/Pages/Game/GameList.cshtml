@@ -19,22 +19,30 @@
                             <th>@Html.DisplayNameFor(i => i.GameLists[0].Player1)</th>
                             <th>@Html.DisplayNameFor(i => i.GameLists[0].Player2)</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Games)
                         {
-                            <tr>
-                                <td>@item.GameState</td>
-                                <td>@item.Owner.UserName</td>
-                                <td>@item.PlayerOnTurn.UserName</td>
-                                <td>
-                                    <form method="post" asp-page-handler="startgame">
-                                        <button class="btn btn-primary">Play</button>
-                                        <input type="hidden" name="id" value="@item.GameId" />
-                                    </form>
-                                </td>
-                            </tr>
+                            @if (Model.UserId == item.OwnerId)
+                            {
+                                <tr>
+                                    <td>@item.GameState</td>
+                                    <td>@item.Owner.UserName</td>
+                                    <td>@item.PlayerOnTurn.UserName</td>
+                                    <td>
+                                        <form method="post" asp-page-handler="startgame">
+                                            <button class="btn btn-primary">Play</button>
+                                            <input type="hidden" name="id" value="@item.GameId" />
+                                        </form>
+                                    </td>
+                                    @if (item.OwnerId == Model.UserId)
+                                    {
+                                        <td><a asp-page-handler="remove" asp-route-id="@item.GameId" class="btn btn-danger">&times;</a></td>
+                                    }
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -48,24 +56,28 @@
                             <th>@Html.DisplayNameFor(i => i.GameLists[0].GameState)</th>
                             <th>@Html.DisplayNameFor(i => i.GameLists[0].Player1)</th>
                             <th>@Html.DisplayNameFor(i => i.GameLists[0].Player2)</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Games)
                         {
-                            <tr>
-                                <td>@item.GameState</td>
-                                <td>@item.Owner.UserName</td>
-                                <td>@item.PlayerOnTurn.UserName</td>
-                                <td>
-                                    <form method="post" asp-page-handler="joingameonplacement">
-                                        <button class="btn btn-primary">Join</button>
-                                        <input type="hidden" name="id" value="@item.GameId" />
-                                    </form>
-                                </td>
-                            </tr>
+                            @if (Model.UserId != item.OwnerId)
+                            {
+                                <tr>
+                                    <td>@item.GameState</td>
+                                    <td>@item.Owner.UserName</td>
+                                    <td>@item.PlayerOnTurn.UserName</td>
+                                    <td>
+                                        <form method="post" asp-page-handler="joingameonplacement">
+                                            <button class="btn btn-primary">Join</button>
+                                            <input type="hidden" name="id" value="@item.GameId" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </main>

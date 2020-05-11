@@ -16,23 +16,6 @@ namespace BattleShips.Services
             _identity = identity;
         }
 
-        public bool CreateNewGame(Guid gameId)
-        {
-            Guid newGameId = Guid.NewGuid();
-            var game = new Game() { OwnerId = _identity.LoginId, GameId = newGameId};
-            _db.Games.Add(game);
-            _db.SaveChanges();
-            return true;
-        }
-
-        public void UserCreateGame(Guid gameId) //TODO navybattlepiece
-        {
-            Guid guid = Guid.NewGuid();
-            var usergame = new UserGame { UserId = _identity.LoginId, GameId = guid };
-            _db.UserGames.Add(usergame);
-            _db.SaveChanges();
-        }
-
         public List<Game> GetGames()
         { 
             return _db.Games.ToList();
@@ -43,12 +26,11 @@ namespace BattleShips.Services
             return _db.Users.ToList();
         }
 
-        public bool RemoveGame(Guid Id)
+        public void RemoveGame(Guid gameId)
         {
-            var trida = _db.Games.SingleOrDefault(c => c.GameId == Id);
-            _db.Games.Remove(trida);
+            var game = _db.Games.SingleOrDefault(c => c.GameId == gameId);
+            _db.Games.Remove(game);
             _db.SaveChanges();
-            return true;
         }
 
         public bool RemoveUserFromGame(string userId)
