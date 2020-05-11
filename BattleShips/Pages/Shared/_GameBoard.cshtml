@@ -9,14 +9,35 @@
     <tbody>
         @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
         {
-            <tr>
-                @foreach (Model.NavyBattlePiece navyBattlePiece in row)
+        <tr>
+            @foreach (Model.NavyBattlePiece navyBattlePiece in row)
+            {
+                if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.Ship)
                 {
-                    <td class="border" data-placement="top" data-toggle="tooltip">
+                    <td class="border bg-secondary" data-placement="top" data-toggle="tooltip">
                         <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
                     </td>
                 }
-            </tr>
+                else if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.Water)
+                {
+                    <td class="border bg-primary" data-placement="top" data-toggle="tooltip">
+                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
+                    </td>
+                }
+                else if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.DeadShip)
+                {
+                    <td class="border bg-danger" data-placement="top" data-toggle="tooltip">
+                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
+                    </td>
+                }
+                else if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.DeadWater)
+                {
+                    <td class="border bg-dark" data-placement="top" data-toggle="tooltip">
+                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
+                    </td>
+                }
+            }
+        </tr>
         }
     </tbody>
 </table>
