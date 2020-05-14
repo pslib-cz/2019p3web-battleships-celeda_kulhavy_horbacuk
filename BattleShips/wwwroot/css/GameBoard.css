@@ -1,13 +1,13 @@
-﻿.board-piece-water {
+﻿.Water {
     background-color: deepskyblue;
 }
-.board-piece-deadwater {
+.DeadWater {
     background-color: skyblue;
 }
-.board-piece-ship {
+.Ship {
     background-color: darkblue;
 }
-.board-piece-deadship {
+.DeadShip {
     background-color: darkred;
 }
 .board-piece-generated {

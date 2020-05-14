@@ -39,5 +39,11 @@ namespace BattleShips.Pages.Game
                 GameBoardModels.Add(newBoard);
             }
         }
+
+        public ActionResult OnGetFireClick(int Id)
+        {
+            _igame.Fire(Id);
+            return RedirectToPage("./InGame");
+        }
     }
 }

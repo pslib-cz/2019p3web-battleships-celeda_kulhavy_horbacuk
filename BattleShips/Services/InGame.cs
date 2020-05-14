@@ -56,29 +56,29 @@ namespace BattleShips.Services
                 NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
 
                 Game currentgame = GetCurrentGame();
-                UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurn.ToString()).AsNoTracking().SingleOrDefault();
+                //UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurn.ToString()).AsNoTracking().SingleOrDefault(); //nejde
 
-                string activeUserId = GetActiveUserId();
-                UserGame ShootersGame = _db.UserGames.Where(u => u.UserId == activeUserId)
-                .Include(u => u.Game)
-                .AsNoTracking().SingleOrDefault();
+                //string activeUserId = GetActiveUserId();
+                //UserGame ShootersGame = _db.UserGames.Where(u => u.UserId == activeUserId) //nejde
+                //.Include(u => u.Game)
+                //.AsNoTracking().SingleOrDefault();
 
-                if (currentgame.GameState == GameState.End)
-                {
-                    //pro případ palby po konci hry
-                }
-                if (battlePiece.UserGameId == ShootersGame.Id)
-                {
-                    //kontrola střelby na vlastní políčka
-                }
-                if (battlePiece.PieceState == PieceState.DeadShip)
-                {
-                    //již trefená loď (hráč by neměl přijít o kolo, jen dostat upozornění)
-                }
-                if (battlePiece.PieceState == PieceState.DeadWater)
-                {
-                    //již trefená voda (hráč by neměl přijít o kolo, jen dostat upozornění)
-                }
+                //if (currentgame.GameState == GameState.End)
+                //{
+                //    //pro případ palby po konci hry
+                //}
+                //if (battlePiece.UserGameId == ShootersGame.Id)
+                //{
+                //    //kontrola střelby na vlastní políčka
+                //}
+                //if (battlePiece.PieceState == PieceState.DeadShip)
+                //{
+                //    //již trefená loď (hráč by neměl přijít o kolo, jen dostat upozornění)
+                //}
+                //if (battlePiece.PieceState == PieceState.DeadWater)
+                //{
+                //    //již trefená voda (hráč by neměl přijít o kolo, jen dostat upozornění)
+                //}
 
                 PieceState newState;
                 switch (battlePiece.PieceState)

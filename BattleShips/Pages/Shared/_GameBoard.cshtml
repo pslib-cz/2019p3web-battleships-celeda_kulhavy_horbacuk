@@ -4,41 +4,43 @@
 @{
     IEnumerable<IEnumerable<BattleShips.Model.NavyBattlePiece>> board = Model.GameBoard(Model._navyBattlePieces);
 }
+<style type="text/css">
+    .Water {
+        background-color: deepskyblue;
+        color: deepskyblue;
+    }
+
+    .DeadWater {
+        background-color: skyblue;
+        color: skyblue;
+    }
+
+    .Ship {
+        background-color: darkblue;
+        color: darkblue;
+    }
+
+    .DeadShip {
+        background-color: darkred;
+        color: darkred;
+    }
+</style>
 
 <table class="row justify-content-between">
     <tbody>
         @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
         {
-        <tr>
-            @foreach (Model.NavyBattlePiece navyBattlePiece in row)
-            {
-                if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.Ship)
+            <tr>
+                @foreach (Model.NavyBattlePiece navyBattlePiece in row)
                 {
-                    <td class="border bg-secondary" data-placement="top" data-toggle="tooltip">
-                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
-                    </td>
+                <td class="border @navyBattlePiece.PieceState" data-placement="top" data-toggle="tooltip">
+                    <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"><button class="btn"/>.</a>
+                </td>
                 }
-                else if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.Water)
-                {
-                    <td class="border bg-primary" data-placement="top" data-toggle="tooltip">
-                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
-                    </td>
-                }
-                else if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.DeadShip)
-                {
-                    <td class="border bg-danger" data-placement="top" data-toggle="tooltip">
-                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
-                    </td>
-                }
-                else if (navyBattlePiece.PieceState == BattleShips.Model.PieceState.DeadWater)
-                {
-                    <td class="border bg-dark" data-placement="top" data-toggle="tooltip">
-                        <button asp-route-Id="@navyBattlePiece.Id" class="btn"></button>
-                    </td>
-                }
-            }
-        </tr>
+            </tr>
         }
     </tbody>
 </table>
 @*<p class="text-primary">@Model.UserGame.User.UserName</p>*@
+
+@*asp-page-handler="FireClick"*@
