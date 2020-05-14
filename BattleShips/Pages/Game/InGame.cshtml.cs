@@ -19,6 +19,7 @@ namespace BattleShips.Pages.Game
         public Model.Game Games;
         public ApplicationDbContext _db;
 
+        public Guid _gameId;
         public IList<UserGame> UserGames { get; set; }
         public IList<GameBoardModel> GameBoardModels { get; set; } = new List<GameBoardModel>();
         public InGameModel(ISetup isetup, IGame igame, ApplicationDbContext db)
@@ -26,12 +27,13 @@ namespace BattleShips.Pages.Game
             _isetup = isetup;
             _igame = igame;
             _db = db;
+            _gameId = _igame.LoadGame("Game");
         }
 
         public void OnGet()
         {
             Games = _igame.GetCurrentGame();
-            UserGames = _igame.GetUserGames();
+            UserGames = _igame.GetUserGames(_gameId);
             for (int board = 0; board < UserGames.Count(); board++)
             {
                 IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(UserGames[board].Id);

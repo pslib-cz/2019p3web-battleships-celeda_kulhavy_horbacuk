@@ -26,21 +26,24 @@
     }
 </style>
 
-<table class="row justify-content-between">
-    <tbody>
-        @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
-        {
-            <tr>
-                @foreach (Model.NavyBattlePiece navyBattlePiece in row)
+@*@{
+    foreach (var userGame in Model.Game.UserGames)
+    {*@
+        <table class="row justify-content-between">
+            <tbody>
+                @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
                 {
-                <td class="border @navyBattlePiece.PieceState" data-placement="top" data-toggle="tooltip">
-                    <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"><button class="btn"/>.</a>
-                </td>
+                    <tr>
+                        @foreach (Model.NavyBattlePiece navyBattlePiece in row)
+                        {
+                            <td class="border @navyBattlePiece.PieceState" data-placement="top" data-toggle="tooltip">
+                                <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"><button class="btn" />B</a>
+                            </td>
+                        }
+                    </tr>
                 }
-            </tr>
-        }
-    </tbody>
-</table>
-@*<p class="text-primary">@Model.UserGame.User.UserName</p>*@
-
-@*asp-page-handler="FireClick"*@
+            </tbody>
+        </table>
+        @*<p class="text-primary">@Model.UserGame.User.UserName</p>*@
+    @*}
+}*@
