@@ -33,7 +33,7 @@ namespace BattleShips.Pages.Game
         public void OnGet()
         {
             Games = _igame.GetCurrentGame();
-            UserGames = _igame.GetUserGames(_gameId);
+            UserGames = _igame.GetUserGames();
             for (int board = 0; board < UserGames.Count(); board++)
             {
                 IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(UserGames[board].Id);
