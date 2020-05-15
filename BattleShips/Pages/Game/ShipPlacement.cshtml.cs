@@ -41,16 +41,15 @@ namespace BattleShips
                 GameBoardModels.Add(newBoard);
             }
         }
-        public void OnGetAddShip()
+        public ActionResult OnGetPlaceShips(int Id)
         {
-            //_isetup.AddShip();
+            _igame.PlaceShips(Id);
+            return RedirectToPage("./ShipPlacement");
         }
 
         public IActionResult OnGetStart()
         {
-            //Ještě se zde rozmistěne lodě museji uložit do databaze nebo sessionu asi
-
-            //_isetup.MatginToWater();
+            _igame.SaveGame("Game", _gameId);
             return RedirectToPage("./InGame");
         }
     }

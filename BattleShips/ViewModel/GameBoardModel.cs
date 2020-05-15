@@ -1,4 +1,6 @@
 ﻿using BattleShips.Model;
+using BattleShips.Services;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +10,16 @@ namespace BattleShips.ViewModel
 {
     public class GameBoardModel
     {
+        public IGame _igame;
         public Game Game { get; set; }
         public UserGame UserGame { get; set; }
+        public string Page { get; set; }
         public IList<NavyBattlePiece> _navyBattlePieces { get; set; }
 
-        public GameBoardModel(IList<NavyBattlePiece> navyBattlePieces, UserGame userGame)
+        public GameBoardModel(IList<NavyBattlePiece> navyBattlePieces, UserGame userGame, string page = "ShipPlacement")
         {
             _navyBattlePieces = navyBattlePieces;
+            Page = page;
         }
         public IEnumerable<IGrouping<int, NavyBattlePiece>> GameBoard(IList<NavyBattlePiece> navyBattlePieces)
         {

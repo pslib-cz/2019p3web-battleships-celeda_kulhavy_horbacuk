@@ -19,8 +19,10 @@ namespace BattleShips.Pages.Game
         public Model.Game Games;
         public ApplicationDbContext _db;
 
+
         public Guid _gameId;
         public IList<UserGame> UserGames { get; set; }
+        public string PageName = "InGame";
         public IList<GameBoardModel> GameBoardModels { get; set; } = new List<GameBoardModel>();
         public InGameModel(ISetup isetup, IGame igame, ApplicationDbContext db)
         {

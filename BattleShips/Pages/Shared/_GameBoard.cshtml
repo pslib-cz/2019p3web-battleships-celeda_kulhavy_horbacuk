@@ -6,18 +6,18 @@
 }
 <style type="text/css">
     .Water {
-        background-color: deepskyblue;
-        color: deepskyblue;
-    }
-
-    .DeadWater {
         background-color: skyblue;
         color: skyblue;
     }
 
+    .DeadWater {
+        background-color: deepskyblue;
+        color: deepskyblue;
+    }
+
     .Ship {
-        background-color: darkblue;
-        color: darkblue;
+        background-color: gray;
+        color: gray;
     }
 
     .DeadShip {
@@ -26,9 +26,30 @@
     }
 </style>
 
-@*@{
-    foreach (var userGame in Model.Game.UserGames)
-    {*@
+@{
+    //foreach (var userGame in Model.Game.UserGames)
+    //{
+
+    if (Model.Page == "ShipPlacement")
+    {
+        <table class="row justify-content-between">
+            <tbody>
+                @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
+                {
+                    <tr>
+                        @foreach (Model.NavyBattlePiece navyBattlePiece in row)
+                        {
+                            <td class="border @navyBattlePiece.PieceState" data-placement="top" data-toggle="tooltip">
+                                <a asp-page-handler="PlaceShips" asp-route-Id="@navyBattlePiece.Id"><button class="btn" />B</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    { 
         <table class="row justify-content-between">
             <tbody>
                 @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
@@ -44,6 +65,8 @@
                 }
             </tbody>
         </table>
-        @*<p class="text-primary">@Model.UserGame.User.UserName</p>*@
-    @*}
-}*@
+    }
+
+    @*<p>@Model._igame.GetUserName(userGame.UserId)</p>*@
+@*}*@
+}
