@@ -137,6 +137,16 @@ namespace BattleShips.Model
                 .HasMany(u => u.CreatedGames)
                 .WithOne(g => g.Owner);
 
+            modelBuilder.Entity<Game>()
+                .HasMany(g => g.UserGames)
+                .WithOne(ug => ug.Game)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserGame>()
+                .HasMany(g => g.NavyBattlePieces)
+                .WithOne(ug => ug.UserGame)
+                .OnDelete(DeleteBehavior.Cascade);
+
             //složený klíč by to v programu jen komplikoval, i když v DB by to řešilo některé nepovolené kombinace...
             //modelBuilder.Entity<UserGame>()
             //    .HasKey(ug => new { ug.UserId, ug.GameId });

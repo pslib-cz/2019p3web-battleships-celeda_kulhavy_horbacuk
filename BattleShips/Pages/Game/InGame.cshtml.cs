@@ -18,7 +18,7 @@ namespace BattleShips.Pages.Game
 
         public Model.Game Games;
         public ApplicationDbContext _db;
-
+        public GameBoardModel _gbm;
 
         public Guid _gameId;
         public IList<UserGame> UserGames { get; set; }

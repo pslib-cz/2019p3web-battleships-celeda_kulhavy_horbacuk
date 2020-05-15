@@ -50,17 +50,16 @@ namespace BattleShips.Services
 
         public void Fire(int? navyBattlePieceId)
         {
-            if(navyBattlePieceId != null)
-            {
+            if (navyBattlePieceId == null) return;
                 NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
 
                 Game currentgame = GetCurrentGame();
-                //UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurn.ToString()).AsNoTracking().SingleOrDefault(); //nejde
+                UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurnId && m.GameId == currentgame.GameId).AsNoTracking().SingleOrDefault(); //nejde
 
-                //string activeUserId = GetActiveUserId();
-                //UserGame ShootersGame = _db.UserGames.Where(u => u.UserId == activeUserId) //nejde
-                //.Include(u => u.Game)
-                //.AsNoTracking().SingleOrDefault();
+                string activeUserId = GetActiveUserId();
+                UserGame ShootersGame = _db.UserGames.Where(u => u.UserId == activeUserId && u.GameId == currentgame.GameId) //nejde
+                .Include(u => u.Game)
+                .AsNoTracking().SingleOrDefault();
 
                 //if (currentgame.GameState == GameState.End)
                 //{
@@ -94,7 +93,6 @@ namespace BattleShips.Services
                 }
                 battlePiece.PieceState = newState;
                 _db.SaveChanges();     
-            }
         }
 
         public void PlaceShips(int? navyBattlePieceId)
@@ -212,6 +210,18 @@ namespace BattleShips.Services
             };
             SaveGame("Game", game.GameId);
             _db.Games.Add(game);
+            _db.UserGames.Add(userGame);
+            CreateBattleField(userGame);
+            _db.SaveChanges();
+        }
+        public void JoinGame(Guid gameId)
+        {
+            UserGame userGame = new UserGame
+            {
+                GameId = gameId,
+                UserId = _user,
+            };
+            SaveGame("Game", gameId);
             _db.UserGames.Add(userGame);
             CreateBattleField(userGame);
             _db.SaveChanges();

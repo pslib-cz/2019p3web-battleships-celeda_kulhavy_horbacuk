@@ -45,6 +45,7 @@ namespace BattleShips
         {
             _game.SaveGame("Game", id);
             return RedirectToPage("./ShipPlacement");
+            //UserGame
         }
         public IActionResult OnPostStartGame(Guid id)
         {
