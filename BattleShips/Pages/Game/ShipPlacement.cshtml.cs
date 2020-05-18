@@ -18,9 +18,12 @@ namespace BattleShips
 
         public Game Games;
         public ApplicationDbContext _db;
+        public UserGame UserGame;
+        public GameBoardModel GameBoard;
 
         public Guid _gameId;
         public IList<UserGame> UserGames { get; set; }
+        public IList<NavyBattlePiece> navyBattlePieces { get; set; }
         public IList<GameBoardModel> GameBoardModels { get; set; } = new List<GameBoardModel>();
 
         public ShipPlacementModel(ISetup isetup, ApplicationDbContext db, IGame igame)
@@ -33,13 +36,12 @@ namespace BattleShips
         public void OnGet()
         {
             Games = _igame.GetCurrentGame();
-            UserGames = _igame.GetUserGames();
-            for (int board = 0; board < UserGames.Count(); board++)
-            {
-                IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(UserGames[board].Id);
-                GameBoardModel newBoard = new GameBoardModel(navyBattlePieces, UserGames[board], "ShipPlacement");
-                GameBoardModels.Add(newBoard);
-            }
+            UserGame = _igame.GetUserGame();
+            navyBattlePieces = _igame.GetBoard();
+            //IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(UserGames);
+            //    GameBoardModel newBoard = new GameBoardModel(navyBattlePieces, UserGame/*[board]*/);
+            //    GameBoardModels.Add(newBoard);
+            GameBoard = new GameBoardModel(navyBattlePieces, UserGame);
         }
         public ActionResult OnGetPlaceShips(int Id)
         {

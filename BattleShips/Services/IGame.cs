@@ -24,5 +24,7 @@ namespace BattleShips.Services
         void StartGame();
         void CreateBattleField(UserGame userGame);
         void JoinGame(Guid gameId);
+        UserGame GetUserGame();
+        IList<NavyBattlePiece> GetBoard();
     }
 }

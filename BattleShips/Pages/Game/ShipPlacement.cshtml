@@ -9,10 +9,8 @@
         <header class="game-header">
             <h1>Umístění lodí</h1>
         </header>
-        @foreach (BattleShips.ViewModel.GameBoardModel gameBoard in Model.GameBoardModels)
-        {
-            <partial name="_GameBoard" model="gameBoard" />
-        }
+
+        <partial name="_ShipPlacement" model="Model.GameBoard" />
 
         <div class="info-box mt-2">
             <p>

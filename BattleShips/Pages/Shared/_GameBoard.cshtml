@@ -35,51 +35,38 @@
         width: 30px;
         border: 1px solid lightgray;
     }
-
-
+    .hidden {
+        color: white;
+    }
 </style>
 
-@{
-    //foreach (var userGame in Model.Game.UserGames)
-    //{
-
-    if (Model.Page == "ShipPlacement")
-    {
-        <table class="row justify-content-between">
-            <tbody>
-                @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
+<table class="row justify-content-between">
+    <tbody>
+        @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
+        {
+        <tr>
+            @foreach (Model.NavyBattlePiece navyBattlePiece in row)
+            {
+                if (navyBattlePiece.Hidden != true)
                 {
-                    <tr>
-                        @foreach (Model.NavyBattlePiece navyBattlePiece in row)
-                        {
-                            <td class="@navyBattlePiece.PieceState battleField" data-placement="top" data-toggle="tooltip">
-                                <a asp-page-handler="PlaceShips" asp-route-Id="@navyBattlePiece.Id"></a>
-                            </td>
-                        }
-                    </tr>
+                    <td class="border @navyBattlePiece.PieceState battleField" data-placement="top" data-toggle="tooltip">
+                        <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"></a>
+                    </td>
                 }
-            </tbody>
-        </table>
-    }
-    else if (Model.Page == "InGame")
-    {
-        <table class="row justify-content-between">
-            <tbody>
-                @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
+                @*else if (navyBattlePiece.Hidden == true && Model.UserGame.User.UserName == navyBattlePiece.UserGame.UserId)
                 {
-                    <tr>
-                        @foreach (Model.NavyBattlePiece navyBattlePiece in row)
-                        {
-                            <td class="border @navyBattlePiece.PieceState battleField" data-placement="top" data-toggle="tooltip">
-                                <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"></a>
-                            </td>                           
-                        }
-                    </tr>
+                    <td class="border @navyBattlePiece.PieceState battleField" data-placement="top" data-toggle="tooltip">
+                        <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"></a>
+                    </td>
+                }*@
+                else if (navyBattlePiece.Hidden == true)
+                {
+                    <td class="border white battleField" data-placement="top" data-toggle="tooltip">
+                        <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"></a>
+                    </td>
                 }
-            </tbody>
-        </table>
-    }
-
-    @*<p>@Model._igame.GetUserName(userGame.UserId)</p>*@
-@*}*@
-}
+            }
+        </tr>
+        }
+    </tbody>
+</table>
