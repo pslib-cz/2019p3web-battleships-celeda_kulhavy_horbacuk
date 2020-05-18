@@ -62,35 +62,38 @@ namespace BattleShips.Services
                 .Include(u => u.Game)
                 .AsNoTracking().SingleOrDefault();
 
-                //if (currentgame.GameState == GameState.End)
-                //{
-                //    //pro případ palby po konci hry
-                //}
-                //if (battlePiece.UserGameId == ShootersGame.Id)
-                //{
-                //    //kontrola střelby na vlastní políčka
-                //}
-                //if (battlePiece.PieceState == PieceState.DeadShip)
-                //{
-                //    //již trefená loď (hráč by neměl přijít o kolo, jen dostat upozornění)
-                //}
-                //if (battlePiece.PieceState == PieceState.DeadWater)
-                //{
-                //    //již trefená voda (hráč by neměl přijít o kolo, jen dostat upozornění)
-                //}
+            if (currentgame.GameState == GameState.End)
+            {
+                //pro případ palby po konci hry
+            }
+            if (battlePiece.UserGameId == ShootersGame.Id)
+            {
+                //kontrola střelby na vlastní políčka
+            }
+            if (battlePiece.PieceState == PieceState.DeadShip)
+            {
+                //již trefená loď (hráč by neměl přijít o kolo, jen dostat upozornění)
+            }
+            if (battlePiece.PieceState == PieceState.DeadWater)
+            {
+                //již trefená voda (hráč by neměl přijít o kolo, jen dostat upozornění)
+            }
 
-                PieceState newState;
+            PieceState newState;
                 switch (battlePiece.PieceState)
                 {
                     case PieceState.Ship:
                         newState = PieceState.DeadShip;
+                        battlePiece.Hidden = false;
                         break;
                     case PieceState.Water:
                         newState = PieceState.DeadWater;
-                        break;
+                        battlePiece.Hidden = false;
+                    break;
                     default:
                         newState = battlePiece.PieceState;
-                        break;
+                        battlePiece.Hidden = false;
+                    break;
                 }
                 battlePiece.PieceState = newState;
                 _db.SaveChanges();     
