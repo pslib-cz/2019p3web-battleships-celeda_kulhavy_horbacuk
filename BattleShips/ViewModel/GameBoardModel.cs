@@ -16,7 +16,7 @@ namespace BattleShips.ViewModel
         public string Page { get; set; }
         public IList<NavyBattlePiece> _navyBattlePieces { get; set; }
 
-        public GameBoardModel(IList<NavyBattlePiece> navyBattlePieces, UserGame userGame, string page = "InGame")
+        public GameBoardModel(IList<NavyBattlePiece> navyBattlePieces, UserGame userGame, string page)
         {
             _navyBattlePieces = navyBattlePieces;
             Page = page;

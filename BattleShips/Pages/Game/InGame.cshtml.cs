@@ -22,7 +22,6 @@ namespace BattleShips.Pages.Game
 
         public Guid _gameId;
         public IList<UserGame> UserGames { get; set; }
-        public string PageName = "InGame";
         public IList<GameBoardModel> GameBoardModels { get; set; } = new List<GameBoardModel>();
         public InGameModel(ISetup isetup, IGame igame, ApplicationDbContext db)
         {
@@ -39,7 +38,7 @@ namespace BattleShips.Pages.Game
             for (int board = 0; board < UserGames.Count(); board++)
             {
                 IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(UserGames[board].Id);
-                GameBoardModel newBoard = new GameBoardModel(navyBattlePieces, UserGames[board]);
+                GameBoardModel newBoard = new GameBoardModel(navyBattlePieces, UserGames[board], "InGame");
                 GameBoardModels.Add(newBoard);
             }
         }
