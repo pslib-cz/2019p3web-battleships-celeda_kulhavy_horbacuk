@@ -39,7 +39,6 @@ namespace BattleShips.Services
         public Guid LoadGame(string id)
         {
             Guid loadId = _session.Get<Guid>(id);
-            //loadId = (Guid)Activator.CreateInstance(typeof(Guid));
             return loadId;
         }
 
