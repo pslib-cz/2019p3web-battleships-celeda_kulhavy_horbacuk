@@ -18,6 +18,7 @@ namespace BattleShips.Services
         public void SaveGame(string id, Guid guid);
         List<NavyBattlePiece> GetNavyBattlePieces(int userGameId);
         public string GetActiveUserId();
+        public string GetActiveUserMail();
         public string GetUserName(string userId);
         public Game GetCurrentGame();
         IList<UserGame> GetUserGames();

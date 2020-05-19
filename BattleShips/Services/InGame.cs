@@ -174,6 +174,11 @@ namespace BattleShips.Services
             var output = _http.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             return output;
         }
+        public string GetActiveUserMail()
+        {
+            var output = _http.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            return output;
+        }
         public IList<NavyBattlePiece> GetBoard()
         {
             var ug = GetUserGame();

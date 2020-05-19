@@ -4,40 +4,7 @@
 @{
     IEnumerable<IEnumerable<BattleShips.Model.NavyBattlePiece>> board = Model.GameBoard(Model._navyBattlePieces);
 }
-<style type="text/css">
-    .Water {
-        background-color: skyblue;
-        color: skyblue;
-    }
-
-    .DeadWater {
-        background-color: deepskyblue;
-        color: deepskyblue;
-    }
-
-    .Ship {
-        background-color: gray;
-        color: gray;
-    }
-
-    .DeadShip {
-        background-color: darkred;
-        color: darkred;
-    }
-
-    .battleField a {
-        display: block;
-        height: 100%;
-    }
-
-    .battleField {
-        height: 30px;
-        width: 30px;
-        border: 1px solid lightgray;
-    }
-</style>
-
-
+<link rel="stylesheet" href="~/css/GameBoard.css" />
 <table class="row justify-content-between">
     <tbody>
         @foreach (IEnumerable<BattleShips.Model.NavyBattlePiece> row in board)
