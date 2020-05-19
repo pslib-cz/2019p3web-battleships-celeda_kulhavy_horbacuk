@@ -41,7 +41,7 @@ namespace BattleShips
             //IList<NavyBattlePiece> navyBattlePieces = _igame.GetNavyBattlePieces(UserGames);
             //    GameBoardModel newBoard = new GameBoardModel(navyBattlePieces, UserGame/*[board]*/);
             //    GameBoardModels.Add(newBoard);
-            GameBoard = new GameBoardModel(navyBattlePieces, UserGame);
+            GameBoard = new GameBoardModel(navyBattlePieces, UserGame, _igame.GetActiveUserId());
         }
         public ActionResult OnGetPlaceShips(int Id)
         {

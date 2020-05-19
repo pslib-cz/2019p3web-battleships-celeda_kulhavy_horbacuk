@@ -53,12 +53,12 @@
                         <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"></a>
                     </td>
                 }
-                @*else if (navyBattlePiece.Hidden == true && Model.UserGame.User.UserName == navyBattlePiece.UserGame.UserId)
+                else if (navyBattlePiece.Hidden == true && Model.UserName == navyBattlePiece.UserGame.UserId)
                 {
                     <td class="border @navyBattlePiece.PieceState battleField" data-placement="top" data-toggle="tooltip">
-                        <a asp-page-handler="FireClick" asp-route-Id="@navyBattlePiece.Id"></a>
+                        <a asp-route-Id="@navyBattlePiece.Id"></a>
                     </td>
-                }*@
+                }
                 else if (navyBattlePiece.Hidden == true)
                 {
                     <td class="border white battleField" data-placement="top" data-toggle="tooltip">
