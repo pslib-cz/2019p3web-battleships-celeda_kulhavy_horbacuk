@@ -49,30 +49,32 @@ namespace BattleShips.Services
         public void Fire(int? navyBattlePieceId)
         {
             //TODO - podmínky pro střelbu
-
-
-            string test;
-
+            
             if (navyBattlePieceId == null) return;
             NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
-           
             Game currentgame = GetCurrentGame();
             UserGame activeUserGame = _db.UserGames.Where(m => m.UserId == currentgame.PlayerOnTurnId && m.GameId == currentgame.GameId).AsNoTracking().SingleOrDefault();
-
             string activeUserId = GetActiveUserId();
             UserGame ShootersGame = _db.UserGames.Where(u => u.UserId == activeUserId && u.GameId == currentgame.GameId)
             .Include(u => u.Game)
             .AsNoTracking().SingleOrDefault();
-            List<NavyBattlePiece> UnhittedPieces = _db.NavyBattlePieces.Where(u => u.UserGame.UserId == activeUserId && u.PieceState == PieceState.Ship).ToList();
-            if (UnhittedPieces.Count < 1)
+
+            foreach (var piece in activeUserGame.NavyBattlePieces)
             {
-                activeUserGame.Game.GameState = GameState.End;
+                if (piece.PieceState == PieceState.Ship)
+                {
+                    int ShipCount = 0;
+                    ShipCount++;
+                    if (ShipCount == 0)
+                    {
+                        currentgame.GameState = GameState.End;
+                    }
+                }
             }
 
             if (currentgame.GameState == GameState.End)
             {
                 //pro případ palby po konci hry
-                test = "Hoho";
             }
             if (battlePiece.UserGameId == ShootersGame.Id)
             {
