@@ -32,10 +32,5 @@ namespace BattleShips.Services
             _db.Games.Remove(game);
             _db.SaveChanges();
         }
-
-        public bool RemoveUserFromGame(string userId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

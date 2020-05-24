@@ -167,23 +167,6 @@ namespace BattleShips.Services
             .Include(u => u.Game)
             .AsNoTracking().SingleOrDefault();
 
-            //if (currentgame.GameState == GameState.End)
-            //{
-            //    //pro případ palby po konci hry
-            //}
-            //if (battlePiece.UserGameId == ShootersGame.Id)
-            //{
-            //    //kontrola střelby na vlastní políčka
-            //}
-            //if (battlePiece.PieceState == PieceState.DeadShip)
-            //{
-            //    //již trefená loď (hráč by neměl přijít o kolo, jen dostat upozornění)
-            //}
-            //if (battlePiece.PieceState == PieceState.DeadWater)
-            //{
-            //    //již trefená voda (hráč by neměl přijít o kolo, jen dostat upozornění)
-            //}
-
             PieceState newState;
             switch (battlePiece.PieceState)
             {
@@ -207,16 +190,6 @@ namespace BattleShips.Services
         {
             var pieces = _db.NavyBattlePieces.Where(g => g.UserGameId == userGameId).ToList();
             return pieces;
-        }
-
-        public IList<ShipPiece> Ships()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Shooting()
-        {
-            throw new NotImplementedException();
         }
 
         public Game GetCurrentGame()
@@ -292,6 +265,7 @@ namespace BattleShips.Services
         }
         public void JoinGame(Guid gameId)
         {
+            
             UserGame userGame = new UserGame
             {
                 GameId = gameId,

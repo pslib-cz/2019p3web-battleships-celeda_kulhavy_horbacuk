@@ -13,6 +13,5 @@ namespace BattleShips.Services
         List<User> GetUsers();
         List<Game> GetGames();
         void RemoveGame(Guid gameId);
-        bool RemoveUserFromGame(string userId);
     }
 }

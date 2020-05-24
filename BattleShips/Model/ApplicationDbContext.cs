@@ -131,11 +131,12 @@ namespace BattleShips.Model
             modelBuilder.Entity<Game>()
                 .HasOne(g => g.Owner)
                 .WithMany(u => u.CreatedGames)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.CreatedGames)
-                .WithOne(g => g.Owner);
+                .WithOne(g => g.Owner)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Game>()
                 .HasMany(g => g.UserGames)
@@ -155,13 +156,13 @@ namespace BattleShips.Model
                 .HasOne(ug => ug.User)
                 .WithMany(u => u.Games)
                 .HasForeignKey(ug => ug.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserGame>()
                 .HasOne(ug => ug.Game)
                 .WithMany(g => g.UserGames)
                 .HasForeignKey(ug => ug.GameId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             //toto ve skutečnosti nechceme - nešly by vložit dvě lodě stejného typu do jedné hry
             //modelBuilder.Entity<ShipGame>()

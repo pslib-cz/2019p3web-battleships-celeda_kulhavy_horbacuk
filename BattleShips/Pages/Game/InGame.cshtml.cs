@@ -19,6 +19,8 @@ namespace BattleShips.Pages.Game
         public Model.Game Games;
         public ApplicationDbContext _db;
         public GameBoardModel _gbm;
+        [TempData]
+        public string Message { get; set; }
 
         public Guid _gameId;
         public IList<UserGame> UserGames { get; set; }
@@ -45,7 +47,7 @@ namespace BattleShips.Pages.Game
 
         public ActionResult OnGetFireClick(int Id)
         {
-            _igame.Fire(Id);
+            Message = _igame.Fire(Id);
             return RedirectToPage("./InGame");
         }
     }
