@@ -12,7 +12,7 @@ namespace BattleShips.Services
         public void Shooting(/*pozice, kdo*/);
         public void EndCheck();//kontrola stavu hry
         public void BoxCheck();//kontrola herních políček
-        public void Fire(int? navyBattlePieceId);
+        public string Fire(int? navyBattlePieceId);
         public void PlaceShips(int? navyBattlePieceId);
         public Guid LoadGame(string id);
         public void SaveGame(string id, Guid guid);

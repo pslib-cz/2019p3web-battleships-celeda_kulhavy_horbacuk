@@ -1,6 +1,7 @@
 ﻿using BattleShips.Helpers;
 using BattleShips.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -46,12 +47,13 @@ namespace BattleShips.Services
         {
             _session.Set(id, guid);
         }
-        public void Fire(int? navyBattlePieceId)
+        public string Fire(int? navyBattlePieceId)
         {
             //TODO - podmínky pro střelbu
+            string result = " ";
             
-            if (navyBattlePieceId == null) return;
-            NavyBattlePiece battlePiece = _db.NavyBattlePieces.Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
+            if (navyBattlePieceId == null) return result;
+            NavyBattlePiece battlePiece = _db.NavyBattlePieces.Include(x => x.UserGame).Where(p => p.Id == navyBattlePieceId).SingleOrDefault();
             Game currentgame = GetCurrentGame();
             UserGame activeUserGame = _db.UserGames.Include(x => x.NavyBattlePieces).Where(m => m.UserId == currentgame.PlayerOnTurnId && m.GameId == currentgame.GameId).AsNoTracking().SingleOrDefault();
             string activeUserId = GetActiveUserId();
@@ -59,55 +61,98 @@ namespace BattleShips.Services
             .Include(u => u.Game)
             .AsNoTracking().SingleOrDefault();
 
-            foreach (var piece in activeUserGame.NavyBattlePieces)
+            IList<NavyBattlePiece> UnhittedPieces = _db.NavyBattlePieces.Where(u => u.UserGameId == battlePiece.UserGameId && u.PieceState == PieceState.Ship).ToList();
+            User hittedPlayer = _db.Users.Where(u => u.Id == activeUserId).Where(u => u.Id == battlePiece.UserGame.UserId).FirstOrDefault();
+            if (UnhittedPieces.Count() < 2)
             {
-                if (piece.PieceState == PieceState.Ship)
-                {
-                    int ShipCount = 0;
-                    ShipCount++;
-                    if (ShipCount == 0)
-                    {
-                        currentgame.GameState = GameState.End;
-                    }
-                }
+                //result = $"Zničil jsi poslední loď {hittedPlayer.UserName}";
+                //hittedPlayer. = PlayerState.Loser;
+                //_db.Users.Update(hittedPlayer);
+                currentgame.GameState = GameState.End;
+                _db.Games.Update(ShootersGame.Game);
+                _db.SaveChanges();
             }
+
+            //foreach (var piece in activeUserGame.NavyBattlePieces)
+            //{
+            //    if (piece.PieceState == PieceState.Ship)
+            //    {
+            //        int ShipCount = 0;
+            //        ShipCount++;
+            //        if (ShipCount == 0)
+            //        {
+            //            currentgame.GameState = GameState.End;
+            //        }
+            //    }
+            //}
 
             if (currentgame.GameState == GameState.End)
             {
-                //pro případ palby po konci hry
+                return "Konec hry!";
             }
-            if (battlePiece.UserGameId == ShootersGame.Id)
+            else
             {
-                //kontrola střelby na vlastní políčka
-            }
-            if (battlePiece.PieceState == PieceState.DeadShip)
-            {
-                //již trefená loď (hráč by neměl přijít o kolo, jen dostat upozornění)
-            }
-            if (battlePiece.PieceState == PieceState.DeadWater)
-            {
-                //již trefená voda (hráč by neměl přijít o kolo, jen dostat upozornění)
+                if (battlePiece.UserGameId == ShootersGame.Id)
+                {
+                    return "Nemůžeš střílet do své lodě";
+                }
+                if (battlePiece.PieceState == PieceState.DeadShip)
+                {
+                    return "Tato loď je již trefená";
+                }
+                if (battlePiece.PieceState == PieceState.DeadWater)
+                {
+                    return "Tuto vodu jsi již trefil";
+                }
+                else 
+                {
+                    PieceState newState;
+                    switch (battlePiece.PieceState)
+                    {
+                        case PieceState.Ship:
+                            newState = PieceState.DeadShip;
+                            battlePiece.Hidden = false;
+                            result = "Trefil jsi loď!";
+               
+                            break;
+                        case PieceState.Water:
+                            newState = PieceState.DeadWater;
+                            battlePiece.Hidden = false;
+                            result = "Trefil jsi vodu";
+                            
+                            break;
+                        default:
+                            newState = battlePiece.PieceState;
+                            battlePiece.Hidden = false;
+                            break;
+                    }
+                    battlePiece.PieceState = newState;
+                    _db.SaveChanges();
+                }
             }
 
-            PieceState newState;
-            switch (battlePiece.PieceState)
-            {
-                case PieceState.Ship:
-                    newState = PieceState.DeadShip;
-                    battlePiece.Hidden = false;
-                    break;
-                case PieceState.Water:
-                    newState = PieceState.DeadWater;
-                    battlePiece.Hidden = false;
-                    break;
-                default:
-                    newState = battlePiece.PieceState;
-                    battlePiece.Hidden = false;
-                    break;
-            }
-            battlePiece.PieceState = newState;
-            _db.SaveChanges();
+            return result;
         }
+
+        //public void ContinueGame(UserGame user)
+        //{
+        //    int Round = 0;
+        //    Round++;
+        //    List<UserGame> userGames = _db.UserGames.Where(u => u.GameId == user.Game.GameId).OrderBy(u => u.Id).ToList();
+        //    UserGame nextPlayer = new UserGame();
+        //    int index = userGames.FindIndex(u => u.Id == user.Id);
+        //    if (Round == 1)
+        //    {
+        //        nextPlayer = userGames[index++];
+        //    }
+        //    else
+        //    {
+        //        nextPlayer = userGames[0];
+        //    }
+        //    user.Game.PlayerOnTurnId = nextPlayer.UserId;
+        //    Round = 0;
+        //    _db.Games.Update(user.Game);
+        //}
 
         public void PlaceShips(int? navyBattlePieceId)
         {

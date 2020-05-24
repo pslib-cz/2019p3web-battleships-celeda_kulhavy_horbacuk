@@ -10,6 +10,11 @@
             <h1>Hrací plocha</h1>
         </header>
 
+        @if (Model.Games.GameState == BattleShips.Model.GameState.End)
+        { 
+            <h3>Konec hry!</h3>
+        }
+
         @foreach (BattleShips.ViewModel.GameBoardModel gameBoard in Model.GameBoardModels)
         {
             <partial name="_GameBoard" model="gameBoard"/>
