@@ -63,7 +63,7 @@ namespace BattleShips.Services
 
             IList<NavyBattlePiece> UnhittedPieces = _db.NavyBattlePieces.Where(u => u.UserGameId == battlePiece.UserGameId && u.PieceState == PieceState.Ship).ToList();
             User hittedPlayer = _db.Users.Where(u => u.Id == activeUserId).Where(u => u.Id == battlePiece.UserGame.UserId).FirstOrDefault();
-            if (UnhittedPieces.Count() < 2)
+            if (UnhittedPieces.Count() < 1)
             {
                 //result = $"Zničil jsi poslední loď {hittedPlayer.UserName}";
                 //hittedPlayer. = PlayerState.Loser;

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleShips.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200510164743_Seed")]
-    partial class Seed
+    [Migration("20200524164032_AllInOneMig")]
+    partial class AllInOneMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -288,13 +288,13 @@ namespace BattleShips.Migrations
                         {
                             Id = "TOMAS123",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe116012-5abb-4868-95ff-e6f61f0482fc",
+                            ConcurrencyStamp = "399c8dca-6d06-4caf-b0f8-b148981aa02c",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMAS.KULHAVY@PSLIB.CZ",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKDMiVd1aVtcmOfXuCsrgbaY9Hsi2vRYDu+KtcIVO+meC2xaQtfUpBPHCWWb7rA3ug==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELrtxc2ZElC0SgVkTGaGwShMO8W0kUkrhEHzLZQw3yVr027Gu8/Ks/ESp4Jjsejw0Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -304,13 +304,13 @@ namespace BattleShips.Migrations
                         {
                             Id = "MARTIN123",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fd198e39-0232-452d-abd9-1050fa883d15",
+                            ConcurrencyStamp = "0898432e-9949-472d-b767-5d3fea32b152",
                             Email = "martin.celeda@pslib.cz",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MARTIN.CELEDA@PSLIB.CZ",
                             NormalizedUserName = "MARTIN.CELEDA@PSLIB.CZ",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPAjw4oXPJGQIhuFB94TjoKZTfHAuJAOU30nHcqbTT3r7jvM0QWSHK963kohbb2rIQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELh322TIFc7+p3ylujOGLIKpgRYKCbwrSSYgGjAunIbBTb1w4PJDpT3YJV+/mda1Tw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
