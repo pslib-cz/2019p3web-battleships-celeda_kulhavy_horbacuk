@@ -15,13 +15,12 @@ namespace BattleShips.ViewModel
         public UserGame UserGame { get; set; }
         public IList<NavyBattlePiece> _navyBattlePieces { get; set; }
         public string UserName { get; set; }
-        public string UserMail { get; set; }
-
-        public GameBoardModel(IList<NavyBattlePiece> navyBattlePieces, UserGame userGame, string userName, string userMail)
+        public GameBoardModel(IList<NavyBattlePiece> navyBattlePieces, UserGame userGame, string userName)
         {
             _navyBattlePieces = navyBattlePieces;
+            UserGame = userGame;
+            Game = userGame.Game;
             UserName = userName;
-            UserMail = userMail;
         }
         public IEnumerable<IGrouping<int, NavyBattlePiece>> GameBoard(IList<NavyBattlePiece> navyBattlePieces)
         {

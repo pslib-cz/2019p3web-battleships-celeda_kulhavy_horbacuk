@@ -69,8 +69,8 @@ namespace BattleShips.Services
                 //hittedPlayer. = PlayerState.Loser;
                 //_db.Users.Update(hittedPlayer);
                 currentgame.GameState = GameState.End;
-                _db.Games.Update(ShootersGame.Game);
-                _db.SaveChanges();
+                //_db.Games.Update(ShootersGame.Game);
+                //_db.SaveChanges();
             }
 
             //foreach (var piece in activeUserGame.NavyBattlePieces)
@@ -88,10 +88,14 @@ namespace BattleShips.Services
 
             if (currentgame.GameState == GameState.End)
             {
+                currentgame.GameState = GameState.End;
+                _db.SaveChanges();
                 return "Konec hry!";
             }
             else
             {
+                currentgame.GameState = GameState.Battle;
+                _db.SaveChanges();
                 if (battlePiece.UserGameId == ShootersGame.Id)
                 {
                     return "Nemůžeš střílet do své lodě";
