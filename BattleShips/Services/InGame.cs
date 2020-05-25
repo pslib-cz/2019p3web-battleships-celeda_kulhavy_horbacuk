@@ -62,29 +62,16 @@ namespace BattleShips.Services
             .AsNoTracking().SingleOrDefault();
 
             IList<NavyBattlePiece> UnhittedPieces = _db.NavyBattlePieces.Where(u => u.UserGameId == battlePiece.UserGameId && u.PieceState == PieceState.Ship).ToList();
-            User hittedPlayer = _db.Users.Where(u => u.Id == activeUserId).Where(u => u.Id == battlePiece.UserGame.UserId).FirstOrDefault();
+            User hittedPlayer = _db.Users.Where(u => u.Id == battlePiece.UserGame.UserId).FirstOrDefault();
             if (UnhittedPieces.Count() < 1)
             {
-                //result = $"Zničil jsi poslední loď {hittedPlayer.UserName}";
+                //result = $"Zničil jsi poslední loď {hittedPlayer.UserName} a vyhrál jsi!";
                 //hittedPlayer. = PlayerState.Loser;
                 //_db.Users.Update(hittedPlayer);
                 currentgame.GameState = GameState.End;
                 //_db.Games.Update(ShootersGame.Game);
                 //_db.SaveChanges();
             }
-
-            //foreach (var piece in activeUserGame.NavyBattlePieces)
-            //{
-            //    if (piece.PieceState == PieceState.Ship)
-            //    {
-            //        int ShipCount = 0;
-            //        ShipCount++;
-            //        if (ShipCount == 0)
-            //        {
-            //            currentgame.GameState = GameState.End;
-            //        }
-            //    }
-            //}
 
             if (currentgame.GameState == GameState.End)
             {
@@ -108,7 +95,11 @@ namespace BattleShips.Services
                 {
                     return "Tuto vodu jsi již trefil";
                 }
-                else 
+                if (activeUserId != currentgame.PlayerOnTurnId)    
+                {
+                    return "Nejsi na řadě";
+                }
+                else
                 {
                     PieceState newState;
                     switch (battlePiece.PieceState)
@@ -117,17 +108,18 @@ namespace BattleShips.Services
                             newState = PieceState.DeadShip;
                             battlePiece.Hidden = false;
                             result = "Trefil jsi loď!";
-               
+                            //ContinueGame(activeUserGame);
                             break;
                         case PieceState.Water:
                             newState = PieceState.DeadWater;
                             battlePiece.Hidden = false;
                             result = "Trefil jsi vodu";
-                            
+                            //ContinueGame(activeUserGame);
                             break;
                         default:
                             newState = battlePiece.PieceState;
                             battlePiece.Hidden = false;
+                            //ContinueGame(activeUserGame);
                             break;
                     }
                     battlePiece.PieceState = newState;
@@ -140,21 +132,23 @@ namespace BattleShips.Services
 
         //public void ContinueGame(UserGame user)
         //{
-        //    int Round = 0;
-        //    Round++;
-        //    List<UserGame> userGames = _db.UserGames.Where(u => u.GameId == user.Game.GameId).OrderBy(u => u.Id).ToList();
-        //    UserGame nextPlayer = new UserGame();
-        //    int index = userGames.FindIndex(u => u.Id == user.Id);
-        //    if (Round == 1)
+        //    int userRound = 0;
+
+        //    userRound++;
+        //    List<Game> listUsers = _db.Games.Include(x => x.UserGames).Where(u => u.GameId == user.GameId).OrderBy(u => u.PlayerOnTurnId).ToList();
+        //    Game nextPlayer = new Game();
+        //    int index = listUsers.FindIndex(u => u.PlayerOnTurnId == user.Game.PlayerOnTurnId);
+        //    if (userRound == 1)
         //    {
-        //        nextPlayer = userGames[index++];
+        //        nextPlayer.PlayerOnTurn = listUsers[index++].PlayerOnTurn;
+        //        userRound = 0;
         //    }
         //    else
         //    {
-        //        nextPlayer = userGames[0];
+        //        nextPlayer.PlayerOnTurn = listUsers[0].PlayerOnTurn;
         //    }
-        //    user.Game.PlayerOnTurnId = nextPlayer.UserId;
-        //    Round = 0;
+        //    user.Game.PlayerOnTurnId = nextPlayer.PlayerOnTurnId;
+        //    userRound = 0;
         //    _db.Games.Update(user.Game);
         //}
 
