@@ -269,16 +269,19 @@ namespace BattleShips.Services
         }
         public void JoinGame(Guid gameId)
         {
-            
-            UserGame userGame = new UserGame
+            var userGames = GetUserGame(); 
+            if(userGames is null)
             {
-                GameId = gameId,
-                UserId = _user,
-            };
-            SaveGame("Game", gameId);
-            _db.UserGames.Add(userGame);
-            CreateBattleField(userGame);
-            _db.SaveChanges();
+                UserGame userGame = new UserGame
+                {
+                    GameId = gameId,
+                    UserId = _user,
+                };
+                SaveGame("Game", gameId);
+                _db.UserGames.Add(userGame);
+                CreateBattleField(userGame);
+                _db.SaveChanges();
+            }  
         }
     }
 }
