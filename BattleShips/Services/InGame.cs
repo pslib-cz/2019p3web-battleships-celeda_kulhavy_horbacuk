@@ -27,16 +27,6 @@ namespace BattleShips.Services
             _user = identity.LoginId;
         }
 
-        public void BoxCheck()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EndCheck()
-        {
-            throw new NotImplementedException();
-        }
-
         public Guid LoadGame(string id)
         {
             Guid loadId = _session.Get<Guid>(id);
