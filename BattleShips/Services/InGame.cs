@@ -60,13 +60,12 @@ namespace BattleShips.Services
                 //_db.Users.Update(hittedPlayer);
                 currentgame.GameState = GameState.End;
                 //_db.Games.Update(ShootersGame.Game);
-                //_db.SaveChanges();
+                _db.SaveChanges();
             }
 
             if (currentgame.GameState == GameState.End)
             {
-                currentgame.GameState = GameState.End;
-                _db.SaveChanges();
+
                 return "Konec hry!";
             }
             else
@@ -158,7 +157,7 @@ namespace BattleShips.Services
         public Game GetCurrentGame()
         {
             Guid currentGameId = CurrentGameId;
-            return _db.Games.Where(x => x.GameId == currentGameId).Include(u => u.UserGames).ThenInclude(u => u.User).AsNoTracking().SingleOrDefault();
+            return _db.Games.Where(x => x.GameId == currentGameId).Include(u => u.UserGames).ThenInclude(u => u.User).SingleOrDefault();
         }
 
         public string GetActiveUserId()
