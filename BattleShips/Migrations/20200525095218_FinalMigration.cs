@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BattleShips.Migrations
 {
-    public partial class AllInOneMig : Migration
+    public partial class FinalMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -169,7 +169,8 @@ namespace BattleShips.Migrations
                         name: "FK_Games_AspNetUsers_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Games_AspNetUsers_PlayerOnTurnId",
                         column: x => x.PlayerOnTurnId,
@@ -195,12 +196,14 @@ namespace BattleShips.Migrations
                         name: "FK_UserGames_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "GameId");
+                        principalColumn: "GameId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserGames_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,12 +309,12 @@ namespace BattleShips.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "TOMAS123", 0, "399c8dca-6d06-4caf-b0f8-b148981aa02c", "tomas.kulhavy@pslib.cz", true, false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMAS.KULHAVY@PSLIB.CZ", "AQAAAAEAACcQAAAAELrtxc2ZElC0SgVkTGaGwShMO8W0kUkrhEHzLZQw3yVr027Gu8/Ks/ESp4Jjsejw0Q==", null, false, "", false, "tomas.kulhavy@pslib.cz" });
+                values: new object[] { "TOMAS123", 0, "26a769bc-c13c-4e61-a022-ad003ec1f46f", "tomas.kulhavy@pslib.cz", true, false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMAS.KULHAVY@PSLIB.CZ", "AQAAAAEAACcQAAAAEKiL13pTFiFHcWMGljYvLbwEQBRIzW3I1f+0YysbJcB9O53ILCyJ+Qsht9OBmNLmCg==", null, false, "", false, "tomas.kulhavy@pslib.cz" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "MARTIN123", 0, "0898432e-9949-472d-b767-5d3fea32b152", "martin.celeda@pslib.cz", true, false, null, "MARTIN.CELEDA@PSLIB.CZ", "MARTIN.CELEDA@PSLIB.CZ", "AQAAAAEAACcQAAAAELh322TIFc7+p3ylujOGLIKpgRYKCbwrSSYgGjAunIbBTb1w4PJDpT3YJV+/mda1Tw==", null, false, "", false, "martin.celeda@pslib.cz" });
+                values: new object[] { "MARTIN123", 0, "b8dd90f9-12d8-4653-8294-dfca758a1978", "martin.celeda@pslib.cz", true, false, null, "MARTIN.CELEDA@PSLIB.CZ", "MARTIN.CELEDA@PSLIB.CZ", "AQAAAAEAACcQAAAAEDFpQxt6mjk4ngVERZSsOY+VtYAv3f84T1iZr9kClI3gFeANbuzT2eI+yNwXs46ctQ==", null, false, "", false, "martin.celeda@pslib.cz" });
 
             migrationBuilder.InsertData(
                 table: "Ships",

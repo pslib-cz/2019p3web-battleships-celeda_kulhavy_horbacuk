@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleShips.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200524164032_AllInOneMig")]
-    partial class AllInOneMig
+    [Migration("20200525095218_FinalMigration")]
+    partial class FinalMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -288,13 +288,13 @@ namespace BattleShips.Migrations
                         {
                             Id = "TOMAS123",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "399c8dca-6d06-4caf-b0f8-b148981aa02c",
+                            ConcurrencyStamp = "26a769bc-c13c-4e61-a022-ad003ec1f46f",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMAS.KULHAVY@PSLIB.CZ",
-                            PasswordHash = "AQAAAAEAACcQAAAAELrtxc2ZElC0SgVkTGaGwShMO8W0kUkrhEHzLZQw3yVr027Gu8/Ks/ESp4Jjsejw0Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKiL13pTFiFHcWMGljYvLbwEQBRIzW3I1f+0YysbJcB9O53ILCyJ+Qsht9OBmNLmCg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -304,13 +304,13 @@ namespace BattleShips.Migrations
                         {
                             Id = "MARTIN123",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0898432e-9949-472d-b767-5d3fea32b152",
+                            ConcurrencyStamp = "b8dd90f9-12d8-4653-8294-dfca758a1978",
                             Email = "martin.celeda@pslib.cz",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MARTIN.CELEDA@PSLIB.CZ",
                             NormalizedUserName = "MARTIN.CELEDA@PSLIB.CZ",
-                            PasswordHash = "AQAAAAEAACcQAAAAELh322TIFc7+p3ylujOGLIKpgRYKCbwrSSYgGjAunIbBTb1w4PJDpT3YJV+/mda1Tw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDFpQxt6mjk4ngVERZSsOY+VtYAv3f84T1iZr9kClI3gFeANbuzT2eI+yNwXs46ctQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -514,7 +514,7 @@ namespace BattleShips.Migrations
                     b.HasOne("BattleShips.Model.User", "Owner")
                         .WithMany("CreatedGames")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BattleShips.Model.User", "PlayerOnTurn")
                         .WithMany("GamesOnTurn")
@@ -588,7 +588,7 @@ namespace BattleShips.Migrations
                     b.HasOne("BattleShips.Model.Game", "Game")
                         .WithMany("UserGames")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BattleShips.Model.Ship", null)
@@ -598,7 +598,7 @@ namespace BattleShips.Migrations
                     b.HasOne("BattleShips.Model.User", "User")
                         .WithMany("Games")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

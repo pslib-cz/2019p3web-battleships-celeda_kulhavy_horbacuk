@@ -95,10 +95,10 @@ namespace BattleShips.Services
                 {
                     return "Tuto vodu jsi již trefil";
                 }
-                if (activeUserId != currentgame.PlayerOnTurnId)    
-                {
-                    return "Nejsi na řadě";
-                }
+                //if (activeUserId != currentgame.PlayerOnTurnId)    
+                //{
+                //    return "Nejsi na řadě";
+                //}
                 else
                 {
                     PieceState newState;
