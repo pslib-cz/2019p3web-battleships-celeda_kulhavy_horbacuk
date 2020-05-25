@@ -108,18 +108,15 @@ namespace BattleShips.Services
                             newState = PieceState.DeadShip;
                             battlePiece.Hidden = false;
                             result = "Trefil jsi loď!";
-                            //ContinueGame(activeUserGame);
                             break;
                         case PieceState.Water:
                             newState = PieceState.DeadWater;
                             battlePiece.Hidden = false;
                             result = "Trefil jsi vodu";
-                            //ContinueGame(activeUserGame);
                             break;
                         default:
                             newState = battlePiece.PieceState;
                             battlePiece.Hidden = false;
-                            //ContinueGame(activeUserGame);
                             break;
                     }
                     battlePiece.PieceState = newState;
@@ -129,28 +126,6 @@ namespace BattleShips.Services
 
             return result;
         }
-
-        //public void ContinueGame(UserGame user)
-        //{
-        //    int userRound = 0;
-
-        //    userRound++;
-        //    List<Game> listUsers = _db.Games.Include(x => x.UserGames).Where(u => u.GameId == user.GameId).OrderBy(u => u.PlayerOnTurnId).ToList();
-        //    Game nextPlayer = new Game();
-        //    int index = listUsers.FindIndex(u => u.PlayerOnTurnId == user.Game.PlayerOnTurnId);
-        //    if (userRound == 1)
-        //    {
-        //        nextPlayer.PlayerOnTurn = listUsers[index++].PlayerOnTurn;
-        //        userRound = 0;
-        //    }
-        //    else
-        //    {
-        //        nextPlayer.PlayerOnTurn = listUsers[0].PlayerOnTurn;
-        //    }
-        //    user.Game.PlayerOnTurnId = nextPlayer.PlayerOnTurnId;
-        //    userRound = 0;
-        //    _db.Games.Update(user.Game);
-        //}
 
         public void PlaceShips(int? navyBattlePieceId)
         {
